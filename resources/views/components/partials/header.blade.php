@@ -1,4 +1,4 @@
-<header class="absolute top-0 left-0 w-full z-10">
+<header class="fixed top-0 left-0 w-full z-50">
     <div class="backdrop-blur-[12px] bg-[rgba(254,249,239,0.1)] border-b border-white/10 w-full">
         <div class="max-w-7xl mx-auto px-6 md:px-12 lg:px-24 py-4 flex items-center justify-between">
             <!-- Brand -->
@@ -8,15 +8,15 @@
 
             <!-- Navigation Links -->
             <nav class="hidden md:flex items-center gap-8 font-medium text-brand-dark text-base">
-                <a href="#" class="underline decoration-solid">Home</a>
-                <a href="#" class="hover:underline">About Us</a>
-                <a href="#" class="hover:underline">Gallery</a>
-                <a href="#" class="hover:underline">Blog</a>
-                <a href="#" class="hover:underline">Contact Us</a>
+                <a href="/" class="@if(request()->is('/')) underline @else hover:underline @endif">Home</a>
+                <a href="/about" class="@if(request()->is('about')) underline @else hover:underline @endif">About Us</a>
+                <a href="/gallery" class="@if(request()->is('gallery')) underline @else hover:underline @endif">Gallery</a>
+                <a href="/blog" class="@if(request()->is('blog')) underline @else hover:underline @endif">Blog</a>
+                <a href="/contact" class="@if(request()->is('contact')) underline @else hover:underline @endif">Contact Us</a>
             </nav>
 
             <!-- CTA -->
-            <x-ui.button href="#" class="px-6 md:px-8 py-2 md:py-3">
+            <x-ui.button href="/login" class="px-6 md:px-8 py-2 md:py-3">
                 Login
             </x-ui.button>
         </div>
