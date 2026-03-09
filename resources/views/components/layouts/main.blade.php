@@ -1,3 +1,4 @@
+@props(['showFooter' => true])
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -28,7 +29,9 @@
     </main>
 
     <!-- Footer -->
-    <x-partials.footer />
+    @if($showFooter ?? true)
+        <x-partials.footer />
+    @endif
 
     <!-- Livewire Scripts -->
     @livewireScripts

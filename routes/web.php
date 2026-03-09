@@ -3,7 +3,8 @@
 use Illuminate\Support\Facades\Route;
 
 //Guest Routes
-Route::view('/', 'pages.home');
+Route::view('/', 'pages.home')->name('home');
+Route::view('/gallery', 'pages.gallery')->name('gallery');
 Route::view('/about', 'pages.about');
 Route::view('/gallery', 'pages.gallery');
 Route::view('/blog', 'pages.blog');
