@@ -31,56 +31,59 @@
             $selectedItem = $items[$selectedIndex] ?? null;
         @endphp
         @if($selectedItem)
-            <!-- Modal Overlay -->
-            <div class="fixed inset-0 z-50 flex items-center justify-center pt-24 pb-8 px-4 bg-[rgba(26,26,26,0.5)] backdrop-blur-sm transition-opacity duration-300" wire:click.self="closeModal">
-                
-                <!-- Close Button -->
-                <button wire:click="closeModal" class="absolute top-24 right-4 md:right-8 text-white hover:text-white/80 z-50 p-2 transition-colors">
-                    <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+            <!-- Gallery Modal -->
+            <div class="fixed inset-0 z-50 bg-black/50 flex items-center justify-center" wire:click.self="closeModal">
+
+                <!-- Modal Box: 88% viewport -->
+                <div class="relative bg-brand-green w-[88vw] h-[88vh] flex flex-col md:flex-row overflow-hidden mt-12">
+
+                <!-- Close Button: yellow circle, top-right of modal -->
+                <button wire:click="closeModal" class="absolute top-4 right-4 z-50 w-10 h-10 rounded-full bg-brand-yellow flex items-center justify-center hover:bg-brand-yellow/80 transition-colors">
+                    <svg class="w-4 h-4 text-brand-green" fill="currentColor" viewBox="0 0 24 24">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5.293 5.293a1 1 0 0 1 1.414 0L12 10.586l5.293-5.293a1 1 0 1 1 1.414 1.414L13.414 12l5.293 5.293a1 1 0 0 1-1.414 1.414L12 13.414l-5.293 5.293a1 1 0 0 1-1.414-1.414L10.586 12 5.293 6.707a1 1 0 0 1 0-1.414z"/>
                     </svg>
                 </button>
 
-                <!-- Navigation Left -->
-                <button wire:click.stop="prevImage" class="absolute left-2 md:left-8 top-1/2 text-gray-900 z-50 bg-white rounded-2xl hover:bg-gray-100 transition-all w-12 h-12 flex items-center justify-center shadow-lg">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path>
+                <!-- Navigation Left: small white rounded button on left edge -->
+                <button wire:click="prevImage" class="absolute left-3 top-1/2 -translate-y-1/2 z-50 bg-white rounded-2xl hover:bg-gray-100 transition-colors w-8 h-8 flex items-center justify-center shadow-md">
+                    <svg class="w-3.5 h-3.5 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
                     </svg>
                 </button>
 
-                <!-- Navigation Right -->
-                <button wire:click.stop="nextImage" class="absolute right-2 md:right-8 top-1/2 text-gray-900 z-50 bg-white rounded-2xl hover:bg-gray-100 transition-all w-12 h-12 flex items-center justify-center shadow-lg">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path>
+                <!-- Navigation Right: small white rounded button on right edge -->
+                <button wire:click="nextImage" class="absolute right-3 top-1/2 -translate-y-1/2 z-50 bg-white rounded-2xl hover:bg-gray-100 transition-colors w-8 h-8 flex items-center justify-center shadow-md">
+                    <svg class="w-3.5 h-3.5 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
                     </svg>
                 </button>
 
-                <!-- Modal Content Container -->
-                <div class="bg-brand-green w-full max-w-6xl flex flex-col md:flex-row items-stretch justify-center p-6 md:p-10 gap-8 shadow-2xl relative z-40 transform transition-all rounded-none" wire:click.stop>
-                    
-                    <!-- Left: Large Image -->
-                    <div class="w-full md:w-1/2 h-[300px] md:h-auto md:min-h-[500px] relative bg-gray-200">
-                        <img src="{{ $selectedItem['image'] }}" alt="{{ $selectedItem['title'] ?? 'Gallery Image' }}" class="absolute inset-0 w-full h-full object-cover">
+                <!-- Content: image left, info right -->
+                <div class="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-12 w-full h-full px-12 md:px-16 pt-12 pb-8 md:py-10">
+
+                    <!-- Portrait Image -->
+                    <div class="flex-shrink-0 flex items-center justify-center md:h-full">
+                        <img
+                            src="{{ $selectedItem['image'] }}"
+                            alt="{{ $selectedItem['title'] ?? 'Gallery Image' }}"
+                            class="h-[32vh] md:h-[76vh] w-auto max-w-[80vw] md:max-w-none aspect-[430/602] object-cover"
+                        >
                     </div>
-                    
-                    <!-- Right: Info Panel -->
-                    <div class="w-full md:w-1/2 flex flex-col justify-center py-4 md:py-8 text-left">
-                        <div class="flex flex-col gap-6 text-white max-w-md">
-                            <!-- Creator Badge -->
-                            <span class="text-base font-medium rounded-full border border-brand-yellow/50 bg-brand-yellow/10 text-brand-yellow px-5 py-2 w-max tracking-wide">
-                                {{ $selectedItem['subtitle'] ?? 'Christin' }}
-                            </span>
-                            
-                            <h2 class="text-2xl md:text-4xl font-medium leading-tight text-white mt-2">
-                                {{ $selectedItem['title'] ?? 'Title gallery Christin' }}
-                            </h2>
-                            
-                            <p class="text-base md:text-lg text-white/80 leading-relaxed text-justify mt-2">
-                                {{ $selectedItem['description'] ?? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.' }}
-                            </p>
-                        </div>
+
+                    <!-- Info Panel -->
+                    <div class="flex flex-col justify-center gap-4 text-white flex-1 md:max-w-[450px]">
+                        <p class="text-sm md:text-base font-medium text-white">
+                            {{ $selectedItem['subtitle'] ?? 'Christin' }}
+                        </p>
+                        <h2 class="text-lg md:text-xl font-medium text-white leading-snug">
+                            {{ $selectedItem['title'] ?? 'Title gallery Christin' }}
+                        </h2>
+                        <p class="text-sm md:text-base font-medium text-white leading-relaxed text-justify">
+                            {{ $selectedItem['description'] ?? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.' }}
+                        </p>
                     </div>
                 </div>
+                </div><!-- end modal box -->
             </div>
         @endif
     @endif
