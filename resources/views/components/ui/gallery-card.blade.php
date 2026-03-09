@@ -10,7 +10,7 @@
         <div class="absolute inset-0 bg-black/40 pointer-events-none"></div>
 
         <!-- Center Explore Button -->
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center translate-y-4 group-hover:translate-y-0 transition-all duration-300 z-30">
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 bg-brand-yellow backdrop-blur-md rounded-full flex items-center justify-center translate-y-4 group-hover:translate-y-0 transition-all duration-300 z-30">
             <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
             </svg>
