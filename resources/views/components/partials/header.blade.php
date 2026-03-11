@@ -56,7 +56,7 @@
         x-transition:leave-end="opacity-0 -translate-y-2"
         x-cloak
         @click.outside="open = false"
-        class="md:hidden backdrop-blur-[12px] bg-[rgba(254,249,239,0.95)] border-b border-white/10 w-full"
+        class="md:hidden backdrop-blur-[12px] bg-[rgba(254,249,239,0.1)] border-b border-white/10 w-full"
     >
         <nav class="max-w-7xl mx-auto px-6 py-4 flex flex-col gap-4 font-medium text-brand-dark text-base">
             <a href="/" class="py-2 @if(request()->is('/')) underline @else hover:underline @endif">Home</a>
