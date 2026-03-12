@@ -2,9 +2,7 @@
     {{-- Search Bar --}}
     <div class="flex justify-center mb-16">
         <div class="relative w-full max-w-md">
-            <svg class="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-brand-dark/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-            </svg>
+            <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-brand-dark/50 text-lg"></i>
             <input 
                 type="text" 
                 wire:model.live.debounce.300ms="search"
@@ -31,9 +29,7 @@
         </div>
     @else
         <div class="flex flex-col items-center justify-center py-20 text-center">
-            <svg class="w-16 h-16 text-brand-muted/40 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
-            </svg>
+            <i class="fa-regular fa-file-lines text-brand-muted/40 mb-4 text-6xl"></i>
             <p class="text-brand-muted text-lg">No articles found.</p>
             <p class="text-brand-muted/60 text-sm mt-1">Try adjusting your search terms.</p>
         </div>
@@ -49,9 +45,7 @@
                 class="w-8 h-8 rounded flex items-center justify-center border transition
                     {{ $currentPage <= 1 ? 'bg-gray-100 border-gray-200 text-gray-400 cursor-not-allowed opacity-50' : 'bg-white border-gray-200 text-brand-dark hover:bg-gray-50' }}"
             >
-                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
-                </svg>
+                <i class="fa-solid fa-chevron-left text-xs"></i>
             </button>
 
             {{-- Page Numbers --}}
@@ -93,9 +87,7 @@
                 class="w-8 h-8 rounded flex items-center justify-center border transition
                     {{ $currentPage >= $lastPage ? 'bg-gray-100 border-gray-200 text-gray-400 cursor-not-allowed opacity-50' : 'bg-white border-gray-200 text-brand-dark hover:bg-gray-50' }}"
             >
-                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
-                </svg>
+                <i class="fa-solid fa-chevron-right text-xs"></i>
             </button>
         </div>
     @endif

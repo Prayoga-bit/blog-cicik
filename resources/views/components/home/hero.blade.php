@@ -17,7 +17,7 @@
             <a href="#explore" class="bg-brand-green group flex items-center gap-3 px-6 py-4 rounded-full font-medium text-white text-lg hover:bg-green-800 transition-colors">
                 Explore More
                 <span class="bg-brand-yellow text-brand-dark w-8 h-8 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    <i class="fa-solid fa-arrow-right text-sm"></i>
                 </span>
             </a>
         </div>

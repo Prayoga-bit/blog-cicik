@@ -16,9 +16,7 @@
 
             <div class="flex items-center gap-3 text-brand-green font-medium text-lg lg:text-xl mt-4 lg:mt-8 animate-bounce hidden lg:flex">
                 <span>Scroll to explore</span>
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-                </svg>
+                <i class="fa-solid fa-arrow-down text-xl"></i>
             </div>
         </div>
 

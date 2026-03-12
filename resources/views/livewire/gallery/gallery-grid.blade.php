@@ -39,23 +39,17 @@
 
                 <!-- Close Button: yellow circle, top-right of modal -->
                 <button wire:click="closeModal" class="absolute top-4 right-4 z-50 w-10 h-10 rounded-full bg-brand-yellow flex items-center justify-center hover:bg-brand-yellow/80 transition-colors">
-                    <svg class="w-4 h-4 text-brand-green" fill="currentColor" viewBox="0 0 24 24">
-                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5.293 5.293a1 1 0 0 1 1.414 0L12 10.586l5.293-5.293a1 1 0 1 1 1.414 1.414L13.414 12l5.293 5.293a1 1 0 0 1-1.414 1.414L12 13.414l-5.293 5.293a1 1 0 0 1-1.414-1.414L10.586 12 5.293 6.707a1 1 0 0 1 0-1.414z"/>
-                    </svg>
+                    <i class="fa-solid fa-xmark text-brand-green text-xl"></i>
                 </button>
 
                 <!-- Navigation Left: small white rounded button on left edge -->
                 <button wire:click="prevImage" class="absolute left-3 top-1/2 -translate-y-1/2 z-50 bg-white rounded-2xl hover:bg-gray-100 transition-colors w-8 h-8 flex items-center justify-center shadow-md">
-                    <svg class="w-3.5 h-3.5 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
-                    </svg>
+                    <i class="fa-solid fa-chevron-left text-gray-900 text-base"></i>
                 </button>
 
                 <!-- Navigation Right: small white rounded button on right edge -->
                 <button wire:click="nextImage" class="absolute right-3 top-1/2 -translate-y-1/2 z-50 bg-white rounded-2xl hover:bg-gray-100 transition-colors w-8 h-8 flex items-center justify-center shadow-md">
-                    <svg class="w-3.5 h-3.5 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
-                    </svg>
+                    <i class="fa-solid fa-chevron-right text-gray-900 text-base"></i>
                 </button>
 
                 <!-- Content: image left, info right -->

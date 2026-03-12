@@ -23,9 +23,7 @@
             @endif
             @if($date)
             <span class="flex items-center gap-1.5 text-sm text-brand-muted">
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                </svg>
+                <i class="fa-regular fa-calendar"></i>
                 {{ $date }}
             </span>
             @endif
@@ -44,16 +42,12 @@
         {{-- Footer: Author & Read More --}}
         <div class="flex items-center justify-between pt-4 border-t border-gray-100 mt-auto">
             <div class="flex items-center gap-2">
-                <svg class="w-3.5 h-3.5 text-brand-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-                </svg>
+                <i class="fa-regular fa-user text-brand-muted text-sm"></i>
                 <span class="text-sm text-brand-muted">{{ $author }}</span>
             </div>
             <a href="{{ $slug }}" class="flex items-center gap-1.5 text-sm font-medium text-brand-green hover:underline">
                 Read More
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-                </svg>
+                <i class="fa-solid fa-arrow-right text-xs"></i>
             </a>
         </div>
     </div>

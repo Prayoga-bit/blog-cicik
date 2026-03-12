@@ -22,10 +22,7 @@
             <div class="flex flex-col gap-4">
                 <div class="flex items-center gap-3">
                     <div class="w-12 h-12 bg-brand-green rounded-full flex items-center justify-center shrink-0">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                        </svg>
+                        <i class="fa-solid fa-eye text-white text-xl"></i>
                     </div>
                     <h3 class="font-bold text-[28px] text-brand-dark">Our Vision</h3>
                 </div>
@@ -38,11 +35,7 @@
             <div class="flex flex-col gap-4">
                 <div class="flex items-center gap-3">
                     <div class="w-12 h-12 bg-brand-yellow rounded-full flex items-center justify-center shrink-0">
-                        <svg class="w-6 h-6 text-brand-dark" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <circle cx="12" cy="12" r="10"/>
-                            <circle cx="12" cy="12" r="6"/>
-                            <circle cx="12" cy="12" r="2"/>
-                        </svg>
+                        <i class="fa-solid fa-bullseye text-brand-dark text-xl"></i>
                     </div>
                     <h3 class="font-bold text-[28px] text-brand-dark">Our Mission</h3>
                 </div>
@@ -54,9 +47,7 @@
                         'Empower clients with knowledge and tools for lasting success.',
                     ] as $item)
                         <li class="flex items-start gap-3">
-                            <svg class="w-6 h-6 text-brand-green shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                            </svg>
+                            <i class="fa-regular fa-circle-check text-brand-green text-xl shrink-0 mt-1"></i>
                             <span class="text-brand-gray text-lg leading-7">{{ $item }}</span>
                         </li>
                     @endforeach
