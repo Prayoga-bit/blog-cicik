@@ -8,14 +8,14 @@
 
     <div class="relative z-10 max-w-[700px] flex flex-col gap-6 mt-16 md:mt-0">
         <h1 class="font-bold text-5xl md:text-6xl text-white leading-tight">
-            Smart Strategies for Managing Your Futures Assets
+            {{ $sections->get('hero_title')?->content ?? 'Smart Strategies for Managing Your Futures Assets' }}
         </h1>
         <p class="font-medium text-xl text-white/90 leading-relaxed max-w-[550px]">
-            Professional assistance for managing gold, forex, and other trading instruments
+            {{ $sections->get('hero_subtitle')?->content ?? 'Professional assistance for managing gold, forex, and other trading instruments' }}
         </p>
         <div class="mt-6 flex">
             <a href="#explore" class="bg-brand-green group flex items-center gap-3 px-6 py-4 rounded-full font-medium text-white text-lg hover:bg-green-800 transition-colors">
-                Explore More
+                {{ $sections->get('hero_button_label')?->content ?? 'Explore More' }}
                 <span class="bg-brand-yellow text-brand-dark w-8 h-8 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
                     <i class="fa-solid fa-arrow-right text-sm"></i>
                 </span>

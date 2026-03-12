@@ -1,9 +1,10 @@
 <?php
 
+use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Route;
 
 //Guest Routes
-Route::view('/', 'pages.home')->name('home');
+Route::get('/', [PageController::class, 'home'])->name('home');
 Route::view('/about', 'pages.about')->name('about');
 Route::view('/gallery', 'pages.gallery')->name('gallery');
 Route::view('/blog', 'pages.blog')->name('blog');

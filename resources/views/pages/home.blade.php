@@ -1,18 +1,18 @@
 <x-layouts.main>
 
     {{-- Hero Section --}}
-    <x-home.hero />
+    @include('components.home.hero')
 
     {{-- Who We Are Section --}}
-    <x-home.who-we-are />
+    @include('components.home.who-we-are')
 
     {{-- Latest Insights Section --}}
-    <x-home.latest-insights />
+    @include('components.home.latest-insights')
 
     {{-- Stats Section --}}
-    <x-home.stats />
+    @include('components.home.stats')
 
     {{-- Practice Areas Section --}}
-    <x-home.practice-areas />
+    @include('components.home.practice-areas')
 
 </x-layouts.main>
