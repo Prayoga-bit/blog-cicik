@@ -15,7 +15,7 @@ class PageSectionSeeder extends Seeder
             [
                 'page_name'   => 'home',
                 'section_key' => 'hero_title',
-                'content'     => 'Smart Strategies for Managing Your Futures Assets',
+                'content'     => 'Smart Strategi for Managing Your Futures Assets',
                 'image_url'   => null,
             ],
             [

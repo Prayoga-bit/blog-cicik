@@ -8,15 +8,31 @@ use Illuminate\Support\Facades\Cache;
 
 class PageContentService
 {
+    private const CACHE_TTL_SECONDS = 10;
+
     /**
      * Retrieve all sections for a given page, keyed by section_key.
      * Results are cached to avoid repeated database hits.
      */
     public function getSections(string $pageName): Collection
     {
-        $cacheKey = "page_sections:{$pageName}";
+        $meta = PageSection::query()
+            ->where('page_name', $pageName)
+            ->selectRaw('MAX(updated_at) as latest_updated_at, COUNT(*) as total')
+            ->first();
 
-        return Cache::rememberForever($cacheKey, function () use ($pageName) {
+        $latestUpdatedAtRaw = $meta?->latest_updated_at;
+        $latestUpdatedAt = match (true) {
+            $latestUpdatedAtRaw instanceof \DateTimeInterface => $latestUpdatedAtRaw->getTimestamp(),
+            is_string($latestUpdatedAtRaw) => strtotime($latestUpdatedAtRaw) ?: 0,
+            default => 0,
+        };
+        $total = (int) ($meta?->total ?? 0);
+        $nonce = (int) Cache::get($this->nonceKey($pageName), 0);
+
+        $cacheKey = "page_sections:{$pageName}:{$nonce}:{$latestUpdatedAt}:{$total}";
+
+        return Cache::remember($cacheKey, now()->addSeconds(self::CACHE_TTL_SECONDS), function () use ($pageName) {
             return PageSection::where('page_name', $pageName)
                 ->get()
                 ->keyBy('section_key');
@@ -60,6 +76,14 @@ class PageContentService
      */
     public function clearCache(string $pageName): void
     {
-        Cache::forget("page_sections:{$pageName}");
+        $nonceKey = $this->nonceKey($pageName);
+        $current = (int) Cache::get($nonceKey, 0);
+
+        Cache::forever($nonceKey, $current + 1);
+    }
+
+    private function nonceKey(string $pageName): string
+    {
+        return "page_sections_nonce:{$pageName}";
     }
 }

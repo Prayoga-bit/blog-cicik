@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\PageContentService;
 use Illuminate\Database\Eloquent\Model;
 
 class PageSection extends Model
@@ -12,4 +13,15 @@ class PageSection extends Model
         'content',
         'image_url',
     ];
+
+    protected static function booted(): void
+    {
+        static::saved(function (PageSection $section): void {
+            app(PageContentService::class)->clearCache($section->page_name);
+        });
+
+        static::deleted(function (PageSection $section): void {
+            app(PageContentService::class)->clearCache($section->page_name);
+        });
+    }
 }
