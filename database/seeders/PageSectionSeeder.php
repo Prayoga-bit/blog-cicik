@@ -182,6 +182,32 @@ class PageSectionSeeder extends Seeder
                 'content'     => 'View All Services',
                 'image_url'   => null,
             ],
+
+            // ── Gallery ─────────────────────────────────────────────────────
+            [
+                'page_name'   => 'gallery',
+                'section_key' => 'gallery_badge',
+                'content'     => 'Visual Stories',
+                'image_url'   => null,
+            ],
+            [
+                'page_name'   => 'gallery',
+                'section_key' => 'gallery_title',
+                'content'     => 'Discover and Share Stunning Stories Through Our Gallery',
+                'image_url'   => null,
+            ],
+            [
+                'page_name'   => 'gallery',
+                'section_key' => 'gallery_description',
+                'content'     => 'A curated wall of documentation from our sessions, strategy meetings, client discussions, and the milestones behind every decision.',
+                'image_url'   => null,
+            ],
+            [
+                'page_name'   => 'gallery',
+                'section_key' => 'gallery_scroll_label',
+                'content'     => 'Scroll to explore',
+                'image_url'   => null,
+            ],
         ];
 
         foreach ($sections as $section) {

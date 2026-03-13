@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             PageSectionSeeder::class,
             ProjectAreaSeeder::class,
+            GallerySeeder::class,
         ]);
     }
 }

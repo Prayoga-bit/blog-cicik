@@ -4,12 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Blog;
 use App\Models\ProjectArea;
+use App\Services\GalleryService;
 use App\Services\PageContentService;
 use Illuminate\View\View;
 
 class PageController extends Controller
 {
-    public function __construct(private PageContentService $cms) {}
+    public function __construct(
+        private PageContentService $cms,
+        private GalleryService $galleryService,
+    ) {}
 
     public function home(): View
     {
@@ -24,5 +28,13 @@ class PageController extends Controller
             ->get();
 
         return view('pages.home', compact('sections', 'projectAreas', 'latestPosts'));
+    }
+
+    public function gallery(): View
+    {
+        $sections = $this->cms->getSections('gallery');
+        $galleryItems = $this->galleryService->getGalleryItems();
+
+        return view('pages.gallery', compact('sections', 'galleryItems'));
     }
 }

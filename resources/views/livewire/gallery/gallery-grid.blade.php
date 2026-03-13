@@ -1,10 +1,15 @@
+@php
+    $galleryItems = collect($items)->values();
+    $leftColumn = $galleryItems->filter(fn ($item, $index) => $index % 2 === 0);
+    $rightColumn = $galleryItems->filter(fn ($item, $index) => $index % 2 === 1);
+@endphp
+
 <div class="flex gap-6 w-full h-max pb-32">
-    <!-- Column 1 -->
     <div class="flex flex-col gap-6 w-1/2 mt-0">
-        @foreach(collect($items)->take(3) as $index => $item)
+        @foreach($leftColumn as $index => $item)
             <div wire:click="openModal({{ $index }})" class="cursor-pointer">
-                <x-ui.gallery-card 
-                    :image="$item['image']" 
+                <x-ui.gallery-card
+                    :image="$item['image']"
                     :title="$item['title'] ?? null"
                     :creator="$item['subtitle'] ?? null"
                 />
@@ -12,19 +17,23 @@
         @endforeach
     </div>
 
-    <!-- Column 2 (Offset by mt-12 natively matching Figma) -->
     <div class="flex flex-col gap-6 w-1/2 mt-12">
-        @foreach(collect($items)->slice(3, 3) as $relativeIndex => $item)
-            @php $index = $relativeIndex + 3; @endphp
+        @foreach($rightColumn as $index => $item)
             <div wire:click="openModal({{ $index }})" class="cursor-pointer">
-                <x-ui.gallery-card 
-                    :image="$item['image']" 
+                <x-ui.gallery-card
+                    :image="$item['image']"
                     :title="$item['title'] ?? null"
                     :creator="$item['subtitle'] ?? null"
                 />
             </div>
         @endforeach
     </div>
+
+    @if($galleryItems->isEmpty())
+        <div class="w-full rounded-3xl border border-brand-green/10 bg-white/80 px-6 py-10 text-center text-brand-gray shadow-sm">
+            Gallery belum memiliki foto untuk ditampilkan.
+        </div>
+    @endif
 
     @if($showModal && $selectedIndex !== null)
         @php
@@ -67,13 +76,13 @@
                     <!-- Info Panel -->
                     <div class="flex flex-col justify-center gap-4 text-white flex-1 md:max-w-[450px]">
                         <p class="text-sm md:text-base font-medium text-white">
-                            {{ $selectedItem['subtitle'] ?? 'Christin' }}
+                            {{ $selectedItem['subtitle'] ?? 'Gallery Team' }}
                         </p>
                         <h2 class="text-lg md:text-xl font-medium text-white leading-snug">
-                            {{ $selectedItem['title'] ?? 'Title gallery Christin' }}
+                            {{ $selectedItem['title'] ?? 'Gallery Highlight' }}
                         </h2>
                         <p class="text-sm md:text-base font-medium text-white leading-relaxed text-justify">
-                            {{ $selectedItem['description'] ?? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.' }}
+                            {{ $selectedItem['description'] ?? 'Dokumentasi visual terbaru dari aktivitas, sesi konsultasi, dan momentum kolaborasi tim kami.' }}
                         </p>
                     </div>
                 </div>
