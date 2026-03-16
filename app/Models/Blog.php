@@ -12,6 +12,7 @@ class Blog extends Model
         'title',
         'slug',
         'content',
+        'category',
         'featured_image',
         'is_featured',
         'author_id',

@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             ProjectAreaSeeder::class,
             TeamMemberSeeder::class,
             GallerySeeder::class,
+            BlogSeeder::class,
         ]);
     }
 }

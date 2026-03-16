@@ -6,7 +6,7 @@
             <input 
                 type="text" 
                 wire:model.live.debounce.300ms="search"
-                placeholder="Search articles..." 
+                placeholder="{{ $searchPlaceholder }}"
                 class="w-full pl-12 pr-6 py-3 px-12 rounded-full border border-gray-200 bg-white shadow-sm text-base text-brand-dark placeholder-brand-dark/50 focus:outline-none focus:ring-2 focus:ring-brand-green/20 focus:border-brand-green transition"
             />
         </div>
@@ -30,8 +30,8 @@
     @else
         <div class="flex flex-col items-center justify-center py-20 text-center">
             <i class="fa-regular fa-file-lines text-brand-muted/40 mb-4 text-6xl"></i>
-            <p class="text-brand-muted text-lg">No articles found.</p>
-            <p class="text-brand-muted/60 text-sm mt-1">Try adjusting your search terms.</p>
+            <p class="text-brand-muted text-lg">{{ $emptyTitle }}</p>
+            <p class="text-brand-muted/60 text-sm mt-1">{{ $emptySubtitle }}</p>
         </div>
     @endif
 

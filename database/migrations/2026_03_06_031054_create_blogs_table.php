@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('slug')->unique(); // Vital for SEO routing
             $table->longText('content');
+            $table->string('category')->nullable(); // Optional category field
             $table->string('featured_image')->nullable();
             $table->boolean('is_featured')->default(false)->index(); 
             $table->foreignId('author_id')->constrained('users')->cascadeOnDelete();

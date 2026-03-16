@@ -208,6 +208,38 @@ class PageSectionSeeder extends Seeder
                 'content'     => 'Scroll to explore',
                 'image_url'   => null,
             ],
+
+            // ── Blog ──────────────────────────────────────────────────────
+            [
+                'page_name'   => 'blog',
+                'section_key' => 'blog_title',
+                'content'     => 'Our Journal',
+                'image_url'   => null,
+            ],
+            [
+                'page_name'   => 'blog',
+                'section_key' => 'blog_subtitle',
+                'content'     => 'Insights, strategies, and stories from our team of financial experts.',
+                'image_url'   => null,
+            ],
+            [
+                'page_name'   => 'blog',
+                'section_key' => 'blog_search_placeholder',
+                'content'     => 'Search articles...',
+                'image_url'   => null,
+            ],
+            [
+                'page_name'   => 'blog',
+                'section_key' => 'blog_empty_title',
+                'content'     => 'No articles found.',
+                'image_url'   => null,
+            ],
+            [
+                'page_name'   => 'blog',
+                'section_key' => 'blog_empty_subtitle',
+                'content'     => 'Try adjusting your search terms.',
+                'image_url'   => null,
+            ],
         ];
 
         foreach ($sections as $section) {
