@@ -20,7 +20,9 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             PageSectionSeeder::class,
+            AboutPageSectionSeeder::class,
             ProjectAreaSeeder::class,
+            TeamMemberSeeder::class,
             GallerySeeder::class,
         ]);
     }

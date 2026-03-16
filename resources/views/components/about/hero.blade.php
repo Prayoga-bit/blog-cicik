@@ -7,12 +7,12 @@
         {{-- Left Content --}}
         <div class="flex flex-col gap-8 w-full lg:w-1/2">
             <div class="inline-block bg-brand-yellow rounded-full px-5 py-1.5 text-sm font-bold text-brand-dark w-max">
-                WHO WE ARE
+                {{ $sections->get('hero_badge')?->content ?? 'WHO WE ARE' }}
             </div>
 
             <div class="flex flex-col gap-4">
                 <h1 class="font-bold text-5xl md:text-[64px] text-brand-green leading-tight">
-                    ABOUT US
+                    {{ $sections->get('hero_title')?->content ?? 'ABOUT US' }}
                 </h1>
                 {{-- Wavy Divider --}}
                 <svg class="w-[221px] h-[3px]" viewBox="0 0 221 3" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -21,12 +21,12 @@
             </div>
 
             <p class="font-medium text-xl text-brand-green leading-relaxed max-w-[430px]">
-                We are a team of dedicated professionals committed to providing expert financial advice and strategies. Our mission is to empower your financial future through innovative solutions and personalized care. With years of experience and a passion for excellence, we help our clients navigate the complexities of financial markets.
+                {{ $sections->get('hero_description')?->content ?? 'We are a team of dedicated professionals committed to providing expert financial advice and strategies. Our mission is to empower your financial future through innovative solutions and personalized care. With years of experience and a passion for excellence, we help our clients navigate the complexities of financial markets.' }}
             </p>
 
             <div>
                 <x-ui.button variant="secondary" href="#vision" class="shadow-lg text-xl px-8 py-3">
-                    More Info
+                    {{ $sections->get('hero_button_label')?->content ?? 'More Info' }}
                 </x-ui.button>
             </div>
         </div>
@@ -38,8 +38,15 @@
 
             {{-- Main Image --}}
             <div class="relative w-full h-[480px] rounded-3xl overflow-clip shadow-2xl">
-                <img alt="Modern corporate building" loading="lazy" class="object-cover w-full h-full"
-                     src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1000&auto=format&fit=crop" />
+                @php
+                    $heroImage = $sections->get('hero_image');
+                    $heroImageSrc = $heroImage?->image_url
+                        ? (str_starts_with($heroImage->image_url, 'http') ? $heroImage->image_url : asset('storage/' . $heroImage->image_url))
+                        : 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1000&auto=format&fit=crop';
+                    $heroImageAlt = $heroImage?->content ?? 'Modern corporate building';
+                @endphp
+                 <img alt="{{ $heroImageAlt }}" loading="lazy" class="object-cover w-full h-full"
+                     src="{{ $heroImageSrc }}" />
                 <div class="absolute inset-0 bg-gradient-to-t from-brand-green/40 to-transparent"></div>
             </div>
 
@@ -49,15 +56,15 @@
                     <i class="fa-solid fa-arrow-trend-up text-white text-lg"></i>
                 </div>
                 <div>
-                    <p class="font-bold text-brand-dark text-lg leading-tight">95%</p>
-                    <p class="text-brand-dark/70 text-xs">Client Success</p>
+                    <p class="font-bold text-brand-dark text-lg leading-tight">{{ $sections->get('hero_badge_success_value')?->content ?? '95%' }}</p>
+                    <p class="text-brand-dark/70 text-xs">{{ $sections->get('hero_badge_success_label')?->content ?? 'Client Success' }}</p>
                 </div>
             </div>
 
             {{-- 10+ Years Badge --}}
             <div class="absolute -bottom-6 -left-6 bg-white pl-6 py-5 pr-8 rounded-2xl shadow-xl">
-                <p class="font-bold text-brand-green text-3xl leading-tight">10+</p>
-                <p class="text-brand-muted text-sm">Years of Experience</p>
+                <p class="font-bold text-brand-green text-3xl leading-tight">{{ $sections->get('hero_badge_experience_value')?->content ?? '10+' }}</p>
+                <p class="text-brand-muted text-sm">{{ $sections->get('hero_badge_experience_label')?->content ?? 'Years of Experience' }}</p>
             </div>
         </div>
     </div>

@@ -1,15 +1,15 @@
 <x-layouts.main>
 
     {{-- Hero Section --}}
-    <x-about.hero />
+    @include('components.about.hero')
 
     {{-- Vision & Mission Section --}}
-    <x-about.vision-mission />
+    @include('components.about.vision-mission')
 
     {{-- Our Expertise Section --}}
     <x-about.expertise />
 
     {{-- Meet The Team Section --}}
-    <x-about.team />
+    @include('components.about.team')
 
 </x-layouts.main>
