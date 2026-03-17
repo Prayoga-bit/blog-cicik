@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Blog;
 use App\Models\ProjectArea;
 use App\Models\TeamMember;
 use App\Services\BlogService;
@@ -48,6 +49,16 @@ class PageController extends Controller
         $sections = $this->cms->getSections('blog');
 
         return view('pages.blog', compact('sections'));
+    }
+
+    public function blogDetail(Blog $blog): View
+    {
+        $blog->loadMissing([
+            'author:id,name,email',
+            'comments.user:id,name,email',
+        ]);
+
+        return view('pages.blog-read', compact('blog'));
     }
 
     public function contact(): View

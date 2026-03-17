@@ -11,7 +11,7 @@
                 <a href="/" class="@if(request()->is('/')) underline @else hover:underline @endif">Home</a>
                 <a href="/about" class="@if(request()->is('about')) underline @else hover:underline @endif">About Us</a>
                 <a href="/gallery" class="@if(request()->is('gallery')) underline @else hover:underline @endif">Gallery</a>
-                <a href="/blog" class="@if(request()->is('blog')) underline @else hover:underline @endif">Blog</a>
+                <a href="/blog" class="@if(request()->is('blog') || request()->is('blog/*')) underline @else hover:underline @endif">Blog</a>
                 <a href="/contact" class="@if(request()->is('contact')) underline @else hover:underline @endif">Contact Us</a>
             </nav>
 
@@ -62,7 +62,7 @@
             <a href="/" class="py-2 @if(request()->is('/')) underline @else hover:underline @endif">Home</a>
             <a href="/about" class="py-2 @if(request()->is('about')) underline @else hover:underline @endif">About Us</a>
             <a href="/gallery" class="py-2 @if(request()->is('gallery')) underline @else hover:underline @endif">Gallery</a>
-            <a href="/blog" class="py-2 @if(request()->is('blog')) underline @else hover:underline @endif">Blog</a>
+            <a href="/blog" class="py-2 @if(request()->is('blog') || request()->is('blog/*')) underline @else hover:underline @endif">Blog</a>
             <a href="/contact" class="py-2 @if(request()->is('contact')) underline @else hover:underline @endif">Contact Us</a>
             <hr class="border-brand-dark/10">
             <a href="/login" class="inline-flex items-center justify-center bg-brand-yellow text-brand-dark font-medium rounded-full px-6 py-3 hover:bg-yellow-400 transition-colors">

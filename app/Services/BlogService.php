@@ -49,7 +49,7 @@ class BlogService
 					'title' => $blog->title,
 					'description' => Str::limit(strip_tags($blog->content), 150),
 					'author' => $blog->author?->name ?? 'Editorial Team',
-					'slug' => '#',
+					'slug' => route('blog.read', $blog->slug),
 				];
 			})
 			->values();
