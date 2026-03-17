@@ -240,6 +240,110 @@ class PageSectionSeeder extends Seeder
                 'content'     => 'Try adjusting your search terms.',
                 'image_url'   => null,
             ],
+
+            // ── Contact ───────────────────────────────────────────────────
+            [
+                'page_name'   => 'contact',
+                'section_key' => 'contact_title',
+                'content'     => 'Get In Touch',
+                'image_url'   => null,
+            ],
+            [
+                'page_name'   => 'contact',
+                'section_key' => 'contact_subtitle',
+                'content'     => "Have a question or want to work together? We'd love to hear from you.",
+                'image_url'   => null,
+            ],
+            [
+                'page_name'   => 'contact',
+                'section_key' => 'contact_info_title',
+                'content'     => 'Contact Information',
+                'image_url'   => null,
+            ],
+            [
+                'page_name'   => 'contact',
+                'section_key' => 'contact_address_title',
+                'content'     => 'Office Address',
+                'image_url'   => null,
+            ],
+            [
+                'page_name'   => 'contact',
+                'section_key' => 'contact_address',
+                'content'     => "123 Financial District\nJakarta, Indonesia 12345",
+                'image_url'   => null,
+            ],
+            [
+                'page_name'   => 'contact',
+                'section_key' => 'contact_phone_title',
+                'content'     => 'Phone',
+                'image_url'   => null,
+            ],
+            [
+                'page_name'   => 'contact',
+                'section_key' => 'contact_phone_1',
+                'content'     => '+62 21 1234 5678',
+                'image_url'   => null,
+            ],
+            [
+                'page_name'   => 'contact',
+                'section_key' => 'contact_phone_2',
+                'content'     => '+62 812 3456 7890',
+                'image_url'   => null,
+            ],
+            [
+                'page_name'   => 'contact',
+                'section_key' => 'contact_email_title',
+                'content'     => 'Email',
+                'image_url'   => null,
+            ],
+            [
+                'page_name'   => 'contact',
+                'section_key' => 'contact_email_1',
+                'content'     => 'info@christineteam.com',
+                'image_url'   => null,
+            ],
+            [
+                'page_name'   => 'contact',
+                'section_key' => 'contact_email_2',
+                'content'     => 'support@christineteam.com',
+                'image_url'   => null,
+            ],
+            [
+                'page_name'   => 'contact',
+                'section_key' => 'contact_hours_title',
+                'content'     => 'Business Hours',
+                'image_url'   => null,
+            ],
+            [
+                'page_name'   => 'contact',
+                'section_key' => 'contact_hours_1',
+                'content'     => 'Monday – Friday: 9AM – 6PM',
+                'image_url'   => null,
+            ],
+            [
+                'page_name'   => 'contact',
+                'section_key' => 'contact_hours_2',
+                'content'     => 'Saturday: 9AM – 2PM',
+                'image_url'   => null,
+            ],
+            [
+                'page_name'   => 'contact',
+                'section_key' => 'contact_quick_response_title',
+                'content'     => 'Quick Response',
+                'image_url'   => null,
+            ],
+            [
+                'page_name'   => 'contact',
+                'section_key' => 'contact_quick_response_text',
+                'content'     => 'We typically respond to all inquiries within 24 hours during business days. For urgent matters, please call our office directly.',
+                'image_url'   => null,
+            ],
+            [
+                'page_name'   => 'contact',
+                'section_key' => 'contact_map_embed_url',
+                'content'     => 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.0317704086347!2d110.41033881080392!3d-7.005541868588885!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e708b6fe8586933%3A0x91135497d5a8bf34!2sRifan%20Financindo%20Berjangka%20Pt.%2C%20Gajahmungkur%2C%20Kec.%20Gajahmungkur%2C%20Kota%20Semarang%2C%20Jawa%20Tengah!5e0!3m2!1sen!2sid!4v1773195434484!5m2!1sen!2sid',
+                'image_url'   => null,
+            ],
         ];
 
         foreach ($sections as $section) {

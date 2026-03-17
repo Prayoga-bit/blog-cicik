@@ -49,4 +49,11 @@ class PageController extends Controller
 
         return view('pages.blog', compact('sections'));
     }
+
+    public function contact(): View
+    {
+        $sections = $this->cms->getSections('contact');
+
+        return view('pages.contact', compact('sections'));
+    }
 }

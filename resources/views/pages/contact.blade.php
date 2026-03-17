@@ -5,9 +5,11 @@
 
             {{-- Page Heading --}}
             <div class="text-center mb-16">
-                <h1 class="font-cursive text-[72px] leading-none text-brand-dark mb-6">Get In Touch</h1>
+                <h1 class="font-cursive text-[72px] leading-none text-brand-dark mb-6">
+                    {{ $sections->get('contact_title')?->content ?? 'Get In Touch' }}
+                </h1>
                 <p class="text-brand-gray text-xl">
-                    Have a question or want to work together? We'd love to hear from you.
+                    {{ $sections->get('contact_subtitle')?->content ?? "Have a question or want to work together? We'd love to hear from you." }}
                 </p>
             </div>
 
@@ -18,12 +20,12 @@
                 @livewire('contact-form')
 
                 {{-- Info Sidebar --}}
-                <x-contact.info-sidebar />
+                <x-contact.info-sidebar :sections="$sections" />
 
             </div>
 
             {{-- Map --}}
-            <x-contact.map-section />
+            <x-contact.map-section :sections="$sections" />
 
         </div>
     </div>
