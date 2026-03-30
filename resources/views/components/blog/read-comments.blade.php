@@ -2,23 +2,6 @@
 
 @php
     $commentCollection = $comments;
-
-    if ($commentCollection->isEmpty()) {
-        $commentCollection = collect([
-            [
-                'name' => 'Alex Morgan',
-                'email' => 'alex@example.com',
-                'comment_text' => 'Great insights on market volatility! I completely agree with the points about diversification.',
-                'created_at' => 'March 15, 2026',
-            ],
-            [
-                'name' => 'Jamie Lee',
-                'email' => 'jamie@example.com',
-                'comment_text' => 'Could you elaborate more on the impact of interest rates mentioned in the second section?',
-                'created_at' => 'March 16, 2026',
-            ],
-        ]);
-    }
 @endphp
 
 <section class="rounded-2xl border border-gray-100 bg-white p-6 shadow-[0_8px_20px_rgba(0,0,0,0.06)] md:p-12">
@@ -55,8 +38,10 @@
     </form>
 
     <div class="mt-8 space-y-6">
-        @foreach ($commentCollection as $comment)
+        @forelse ($commentCollection as $comment)
             <x-blog.read-comment-item :comment="$comment" />
-        @endforeach
+        @empty
+            <p class="text-sm text-brand-muted">No comments yet for this article.</p>
+        @endforelse
     </div>
 </section>

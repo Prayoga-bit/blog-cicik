@@ -9,10 +9,6 @@
                 {{ $sections->get('practice_subtitle')?->content ?? 'Specialized financial services designed to maximize your potential.' }}
             </p>
         </div>
-        <x-ui.button variant="outline" href="#">
-            {{ $sections->get('practice_view_all_label')?->content ?? 'View All Services' }}
-            <i class="fa-solid fa-arrow-right ml-2 text-sm"></i>
-        </x-ui.button>
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">

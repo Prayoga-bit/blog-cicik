@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
+            'password' => bcrypt('password'),
         ]);
 
         $this->call([
@@ -25,6 +26,7 @@ class DatabaseSeeder extends Seeder
             TeamMemberSeeder::class,
             GallerySeeder::class,
             BlogSeeder::class,
+            CommentSeeder::class,
         ]);
     }
 }

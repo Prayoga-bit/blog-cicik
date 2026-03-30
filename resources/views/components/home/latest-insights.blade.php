@@ -23,6 +23,7 @@
                 :date="$post->created_at->format('F j, Y')"
                 :title="$post->title"
                 :description="\Illuminate\Support\Str::limit(strip_tags($post->content), 120)"
+                :slug="route('blog.read', $post->slug)"
             />
         @empty
             {{-- Placeholder cards shown when no blog posts exist yet --}}
@@ -32,6 +33,7 @@
                 date="March 15, 2026"
                 title="Understanding Market Volatility in 2026"
                 description="Discover the latest trends and strategies that can help elevate your financial portfolio to the next level."
+                :slug="route('blog')"
             />
             <x-ui.card
                 image="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop"
@@ -39,6 +41,7 @@
                 date="March 10, 2026"
                 title="The Golden Rule of Asset Allocation"
                 description="Discover the latest trends and strategies that can help elevate your financial portfolio to the next level."
+                :slug="route('blog')"
             />
             <x-ui.card
                 image="https://images.unsplash.com/photo-1554224155-6726b3ff858f?q=80&w=800&auto=format&fit=crop"
@@ -46,6 +49,7 @@
                 date="March 5, 2026"
                 title="Why Corporate Consulting Matters"
                 description="Discover the latest trends and strategies that can help elevate your financial portfolio to the next level."
+                :slug="route('blog')"
             />
         @endforelse
     </div>

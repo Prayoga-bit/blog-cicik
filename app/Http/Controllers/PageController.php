@@ -55,6 +55,7 @@ class PageController extends Controller
     {
         $blog->loadMissing([
             'author:id,name,email',
+            'comments' => fn ($query) => $query->latest(),
             'comments.user:id,name,email',
         ]);
 
