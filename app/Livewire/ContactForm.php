@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\ContactMessage;
 use Livewire\Component;
 
 class ContactForm extends Component
@@ -27,11 +28,9 @@ class ContactForm extends Component
 
     public function submit(): void
     {
-        $this->validate();
+        $validated = $this->validate();
 
-        // TODO: store to DB / send email
-        // ContactMessage::create([...])
-        // Mail::to('info@christineteam.com')->send(new ContactMail(...))
+        ContactMessage::create($validated);
 
         $this->reset(['name', 'email', 'message']);
         $this->submitted = true;

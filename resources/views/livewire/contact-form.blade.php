@@ -58,13 +58,13 @@
                 <div class="relative">
                     <i class="fa-regular fa-comment absolute left-3 top-[14px] text-brand-muted text-lg"></i>
                     <textarea
-                        wire:model="message"
+                        wire:model.live="message"
                         rows="6"
                         placeholder="Tell us about your project or inquiry..."
                         class="w-full bg-[#f3f3f5] border border-gray-200 rounded-lg pl-11 pr-3 py-3 text-sm text-brand-dark placeholder-brand-muted focus:outline-none focus:ring-2 focus:ring-brand-green focus:border-transparent transition resize-none"
                     ></textarea>
                 </div>
-                <span class="text-xs text-brand-muted">{{ strlen($message) }} characters</span>
+                <span class="text-xs text-brand-muted">{{ mb_strlen($message ?? '') }} characters</span>
                 @error('message') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
             </div>
 
