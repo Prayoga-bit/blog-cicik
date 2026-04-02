@@ -40,6 +40,30 @@ class PageContentService
     }
 
     /**
+     * Retrieve all sections for the admin page, grouped by page name.
+     */
+    public function getEditableSections(): Collection
+    {
+        return PageSection::query()
+            ->orderBy('page_name')
+            ->orderBy('section_key')
+            ->get()
+            ->groupBy('page_name');
+    }
+
+    /**
+     * Get the available page names that contain editable sections.
+     */
+    public function getPageNames(): Collection
+    {
+        return PageSection::query()
+            ->select('page_name')
+            ->distinct()
+            ->orderBy('page_name')
+            ->pluck('page_name');
+    }
+
+    /**
      * Get the text content for a specific section key, with an optional fallback.
      */
     public function getText(string $pageName, string $sectionKey, string $fallback = ''): string
@@ -47,6 +71,35 @@ class PageContentService
         $sections = $this->getSections($pageName);
 
         return $sections->get($sectionKey)?->content ?? $fallback;
+    }
+
+    /**
+     * Update or create a text section for the given page.
+     */
+    public function updateSectionContent(string $pageName, string $sectionKey, ?string $content): PageSection
+    {
+        return PageSection::updateOrCreate(
+            ['page_name' => $pageName, 'section_key' => $sectionKey],
+            ['content' => $content]
+        );
+    }
+
+    /**
+     * Update or create a section's text and image URL for the given page.
+     */
+    public function updateSectionContentAndImage(
+        string $pageName,
+        string $sectionKey,
+        ?string $content,
+        ?string $imageUrl,
+    ): PageSection {
+        return PageSection::updateOrCreate(
+            ['page_name' => $pageName, 'section_key' => $sectionKey],
+            [
+                'content' => $content,
+                'image_url' => $imageUrl,
+            ]
+        );
     }
 
     /**

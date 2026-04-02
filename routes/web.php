@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\PageSectionController;
 use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,6 +16,10 @@ Route::get('/contact', [PageController::class, 'contact'])->name('contact');
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
+
+Route::get('page-section', [PageSectionController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('page-section');
 
 Route::view('profile', 'profile')
     ->middleware(['auth'])
