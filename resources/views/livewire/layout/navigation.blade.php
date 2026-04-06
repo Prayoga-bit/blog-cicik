@@ -48,6 +48,9 @@ new class extends Component
                     <x-nav-link :href="route('gallery-editor')" :active="request()->routeIs('gallery-editor')" wire:navigate>
                         {{ __('Gallery') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('blog-editor')" :active="request()->routeIs('blog-editor')" wire:navigate>
+                        {{ __('Blog') }}
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -113,6 +116,9 @@ new class extends Component
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('gallery-editor')" :active="request()->routeIs('gallery-editor')" wire:navigate>
                 {{ __('Gallery') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('blog-editor')" :active="request()->routeIs('blog-editor')" wire:navigate>
+                {{ __('Blog') }}
             </x-responsive-nav-link>
         </div>
 
