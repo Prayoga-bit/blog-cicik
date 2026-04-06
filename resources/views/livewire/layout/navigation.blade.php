@@ -36,6 +36,18 @@ new class extends Component
                     <x-nav-link :href="route('page-section')" :active="request()->routeIs('page-section')" wire:navigate>
                         {{ __('Page Section') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('team-members')" :active="request()->routeIs('team-members')" wire:navigate>
+                        {{ __('Team Members') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('project-areas')" :active="request()->routeIs('project-areas')" wire:navigate>
+                        {{ __('Project Areas') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('contact-messages')" :active="request()->routeIs('contact-messages')" wire:navigate>
+                        {{ __('Contact Messages') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('gallery-editor')" :active="request()->routeIs('gallery-editor')" wire:navigate>
+                        {{ __('Gallery') }}
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -89,6 +101,18 @@ new class extends Component
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('page-section')" :active="request()->routeIs('page-section')" wire:navigate>
                 {{ __('Page Section') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('team-members')" :active="request()->routeIs('team-members')" wire:navigate>
+                {{ __('Team Members') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('project-areas')" :active="request()->routeIs('project-areas')" wire:navigate>
+                {{ __('Project Areas') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('contact-messages')" :active="request()->routeIs('contact-messages')" wire:navigate>
+                {{ __('Contact Messages') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('gallery-editor')" :active="request()->routeIs('gallery-editor')" wire:navigate>
+                {{ __('Gallery') }}
             </x-responsive-nav-link>
         </div>
 
