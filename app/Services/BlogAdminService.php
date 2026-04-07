@@ -3,19 +3,30 @@
 namespace App\Services;
 
 use App\Models\Blog;
-use Illuminate\Support\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class BlogAdminService
 {
     /**
      * Retrieve blog records for admin editing.
      */
-    public function getEditablePosts(): Collection
+    public function getEditablePosts(int $perPage = 12): LengthAwarePaginator
     {
         return Blog::query()
+            ->select([
+                'id',
+                'title',
+                'slug',
+                'content',
+                'category',
+                'featured_image',
+                'is_featured',
+                'author_id',
+                'created_at',
+            ])
             ->with('author:id,name')
             ->latest('id')
-            ->get();
+            ->paginate($perPage);
     }
 
     /**

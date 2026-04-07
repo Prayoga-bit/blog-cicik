@@ -1,17 +1,23 @@
-<div class="space-y-6 py-12">
+<div class="space-y-6 rounded-[32px] bg-brand-light/70 py-12 shadow-sm ring-1 ring-brand-green/5">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="space-y-6">
+            @if ($statusMessage)
+                <div class="rounded-lg border border-brand-yellow/30 bg-brand-yellow/20 px-4 py-3 text-sm text-brand-dark">
+                    {{ $statusMessage }}
+                </div>
+            @endif
+
             @if ($deletedPostId)
-                <div class="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+                <div class="rounded-lg border border-brand-green/20 bg-white px-4 py-3 text-sm text-brand-dark shadow-sm">
                     Blog #{{ $deletedPostId }} berhasil dihapus.
                 </div>
             @endif
             <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
                 @forelse ($posts as $post)
-                    <article class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm" wire:key="blog-post-{{ $post['id'] }}">
+                    <article class="overflow-hidden rounded-2xl border border-brand-green/10 bg-white shadow-sm transition-shadow duration-200 hover:shadow-md" wire:key="blog-post-{{ $post['id'] }}">
                         <div class="relative h-44 w-full bg-slate-100">
                             @if ($post['featured_image'])
-                                <img src="{{ $post['featured_image'] }}" alt="{{ $post['title'] }}" class="h-full w-full object-cover" />
+                                <img src="{{ $post['featured_image'] }}" alt="{{ $post['title'] }}" loading="lazy" class="h-full w-full object-cover" />
                             @else
                                 <div class="flex h-full w-full items-center justify-center bg-gradient-to-br from-brand-light to-white text-sm text-brand-muted">
                                     No image
@@ -25,30 +31,30 @@
 
                         <div class="space-y-3 px-5 py-4">
                             <div class="space-y-1">
-                                <h3 class="text-lg font-semibold text-gray-900">
+                                <h3 class="text-lg font-semibold text-brand-dark">
                                     {{ $post['title'] ?: 'Blog Post' }}
                                 </h3>
-                                <p class="text-xs text-gray-500">{{ $post['author_name'] }} · {{ $post['created_at'] ?? 'Draft' }}</p>
+                                <p class="text-xs text-brand-muted">{{ $post['author_name'] }} · {{ $post['created_at'] ?? 'Draft' }}</p>
                             </div>
 
-                            <p class="text-sm text-gray-600">
+                            <p class="text-sm text-brand-gray">
                                 {{ $post['excerpt'] ?: 'No summary available yet.' }}
                             </p>
 
                             <div class="flex items-center justify-between pt-2">
-                                <span class="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-600">
+                                <span class="rounded-full bg-brand-light px-3 py-1 text-xs font-medium text-brand-green">
                                     {{ $post['category'] ?: 'Uncategorized' }}
                                 </span>
 
                                 <div class="flex items-center gap-3">
-                                    <a href="{{ route('blog-editor.edit', $post['id']) }}" class="inline-flex items-center gap-2 text-sm font-semibold text-brand-green hover:text-brand-dark">
+                                    <a href="{{ route('blog-editor.edit', $post['id']) }}" class="inline-flex items-center gap-2 text-sm font-semibold text-brand-green transition hover:text-brand-dark">
                                         Edit
                                         <i class="fa-solid fa-arrow-right"></i>
                                     </a>
 
                                     <button
                                         type="button"
-                                        class="inline-flex items-center gap-2 text-sm font-semibold text-red-600 hover:text-red-700"
+                                        class="inline-flex items-center gap-2 text-sm font-semibold text-red-600 transition hover:text-red-700"
                                         wire:click="deletePost({{ $post['id'] }})"
                                         wire:confirm="Hapus blog ini?"
                                     >
@@ -60,11 +66,13 @@
                         </div>
                     </article>
                 @empty
-                    <div class="col-span-full rounded-lg border border-dashed border-gray-300 bg-white px-6 py-10 text-center text-sm text-gray-500">
+                    <div class="col-span-full rounded-lg border border-dashed border-brand-green/15 bg-white px-6 py-10 text-center text-sm text-brand-muted shadow-sm">
                         No blog posts are available yet.
                     </div>
                 @endforelse
             </div>
+
+            <x-ui.pagination :paginator="$posts" />
         </div>
     </div>
 </div>

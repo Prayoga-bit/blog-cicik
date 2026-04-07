@@ -51,10 +51,7 @@ class BlogGrid extends Component
         }
 
         return view('livewire.blog.blog-grid', [
-            'posts' => $paginator->getCollection(),
-            'currentPage' => $paginator->currentPage(),
-            'lastPage' => $paginator->lastPage(),
-            'total' => $paginator->total(),
+            'posts' => $paginator,
         ]);
     }
 }
