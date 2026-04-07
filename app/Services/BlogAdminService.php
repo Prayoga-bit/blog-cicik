@@ -36,4 +36,12 @@ class BlogAdminService
 
         return $post;
     }
+
+    /**
+     * Delete a blog post by id.
+     */
+    public function deletePost(int $postId): void
+    {
+        Blog::query()->whereKey($postId)->delete();
+    }
 }

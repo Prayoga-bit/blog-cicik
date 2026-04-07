@@ -26,6 +26,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('contact-messages', [ContactMessageController::class, 'index'])->name('contact-messages');
     Route::get('gallery-editor', [GalleryController::class, 'index'])->name('gallery-editor');
     Route::get('blog-editor', [BlogController::class, 'index'])->name('blog-editor');
+    Route::get('blog-editor/{blog}/edit', [BlogController::class, 'edit'])->name('blog-editor.edit');
 });
     
 
