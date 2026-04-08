@@ -16,9 +16,15 @@
             </nav>
 
             <!-- Desktop CTA -->
-            <x-ui.button href="/login" class="hidden md:inline-flex px-6 md:px-8 py-2 md:py-3">
-                Login
-            </x-ui.button>
+            @auth
+                <x-ui.button href="{{ url('/dashboard') }}" class="hidden md:inline-flex px-6 md:px-8 py-2 md:py-3">
+                    Dashboard
+                </x-ui.button>
+            @else
+                <x-ui.button href="{{ route('login') }}" class="hidden md:inline-flex px-6 md:px-8 py-2 md:py-3">
+                    Login
+                </x-ui.button>
+            @endauth
 
             <!-- Mobile Hamburger Button -->
             <button
@@ -65,9 +71,15 @@
             <a href="/blog" class="py-2 @if(request()->is('blog') || request()->is('blog/*')) underline @else hover:underline @endif">Blog</a>
             <a href="/contact" class="py-2 @if(request()->is('contact')) underline @else hover:underline @endif">Contact Us</a>
             <hr class="border-brand-dark/10">
-            <a href="/login" class="inline-flex items-center justify-center bg-brand-yellow text-brand-dark font-medium rounded-full px-6 py-3 hover:bg-yellow-400 transition-colors">
-                Login
-            </a>
+            @auth
+                <a href="{{ url('/dashboard') }}" class="inline-flex items-center justify-center bg-brand-yellow text-brand-dark font-medium rounded-full px-6 py-3 hover:bg-yellow-400 transition-colors">
+                    Dashboard
+                </a>
+            @else
+                <a href="{{ route('login') }}" class="inline-flex items-center justify-center bg-brand-yellow text-brand-dark font-medium rounded-full px-6 py-3 hover:bg-yellow-400 transition-colors">
+                    Login
+                </a>
+            @endauth
         </nav>
     </div>
 </header>

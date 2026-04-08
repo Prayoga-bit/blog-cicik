@@ -12,6 +12,7 @@ class BlogService
 	public function getLatestPosts(int $limit = 3): Collection
 	{
 		return Blog::query()
+			->withRichText('content')
 			->with('author:id,name')
 			->latest()
 			->take($limit)
@@ -24,6 +25,7 @@ class BlogService
 	public function paginateForGrid(string $search = '', int $perPage = 6, int $page = 1): LengthAwarePaginator
 	{
 		$query = Blog::query()
+			->withRichText('content')
 			->with('author:id,name')
 			->latest();
 
@@ -31,7 +33,9 @@ class BlogService
 			$query->where(function ($innerQuery) use ($search): void {
 				$innerQuery->where('title', 'like', "%{$search}%")
 					->orWhere('category', 'like', "%{$search}%")
-					->orWhere('content', 'like', "%{$search}%")
+					->orWhereHas('richTextContent', function ($contentQuery) use ($search): void {
+						$contentQuery->where('body', 'like', "%{$search}%");
+					})
 					->orWhereHas('author', function ($authorQuery) use ($search): void {
 						$authorQuery->where('name', 'like', "%{$search}%");
 					});

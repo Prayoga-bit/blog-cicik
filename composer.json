@@ -15,7 +15,8 @@
         "livewire/blaze": "^1.0",
         "livewire/livewire": "^3.6.4",
         "livewire/volt": "^1.7.0",
-        "spatie/laravel-permission": "^7.2"
+        "spatie/laravel-permission": "^7.2",
+        "tonysm/rich-text-laravel": "^3.11"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

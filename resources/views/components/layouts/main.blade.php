@@ -20,6 +20,7 @@
     
     <!-- Livewire Styles -->
     @livewireStyles
+    <x-rich-text::styles theme="daisyui" data-turbo-track="reload" />
 </head>
 <body class="antialiased bg-white text-brand-dark font-sans relative">
     

@@ -13,7 +13,9 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @stack('styles')
         @livewireStyles
+        <x-rich-text::styles theme="daisyui" data-turbo-track="reload" />
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
@@ -34,5 +36,6 @@
             </main>
         </div>
         @livewireScripts
+        @stack('scripts')
     </body>
 </html>

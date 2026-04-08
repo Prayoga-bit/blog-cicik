@@ -32,7 +32,16 @@
 
         <div>
             <label class="mb-1 block text-sm font-medium text-gray-900" for="post-content">{{ __('Content') }}</label>
-            <textarea id="post-content" wire:model="content" rows="10" class="block w-full rounded-lg border-gray-300 bg-white text-sm shadow-sm focus:border-brand-green focus:ring-brand-green"></textarea>
+            <div class="rounded-lg border border-gray-300 bg-white shadow-sm">
+                <x-rich-text::input
+                    id="post-content"
+                    name="content"
+                    wire:model="content"
+                    wire:key="blog-content-editor"
+                    :value="$content"
+                    class="rounded-lg"
+                />
+            </div>
             @error('content') <p class="mt-2 text-sm text-red-600">{{ $message }}</p> @enderror
         </div>
 

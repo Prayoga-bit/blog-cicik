@@ -26,7 +26,7 @@ class BlogEditForm extends Component
         $this->blog = $blog;
         $this->title = (string) $blog->title;
         $this->slug = (string) $blog->slug;
-        $this->content = (string) $blog->content;
+        $this->content = $blog->content?->toEditorHtml() ?? '';
         $this->category = $blog->category;
         $this->featured_image = $blog->featured_image;
         $this->is_featured = (bool) $blog->is_featured;

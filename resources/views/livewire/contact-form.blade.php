@@ -74,9 +74,10 @@
                 class="w-full flex items-center justify-center gap-2 bg-brand-green hover:bg-brand-green/90 text-white font-medium text-lg py-3 rounded-lg transition"
                 wire:loading.attr="disabled"
                 wire:loading.class="opacity-75 cursor-not-allowed"
+                wire:target="submit"
             >
-                <i wire:loading.remove class="fa-regular fa-paper-plane text-lg"></i>
-                <i wire:loading class="fa-solid fa-circle-notch fa-spin text-lg"></i>
+                <i wire:loading.remove wire:target="submit" class="fa-regular fa-paper-plane text-lg"></i>
+                <i wire:loading wire:target="submit" class="fa-solid fa-circle-notch fa-spin text-lg"></i>
                 Send Message
             </button>
         </form>

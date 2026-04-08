@@ -13,11 +13,11 @@ class BlogAdminService
     public function getEditablePosts(int $perPage = 12): LengthAwarePaginator
     {
         return Blog::query()
+            ->withRichText('content')
             ->select([
                 'id',
                 'title',
                 'slug',
-                'content',
                 'category',
                 'featured_image',
                 'is_featured',
@@ -39,7 +39,7 @@ class BlogAdminService
         $post->update([
             'title' => $payload['title'] ?? $post->title,
             'slug' => $payload['slug'] ?? $post->slug,
-            'content' => $payload['content'] ?? $post->content,
+            'content' => $payload['content'] ?? $post->content?->toEditorHtml(),
             'category' => $payload['category'] ?? null,
             'featured_image' => $payload['featured_image'] ?? null,
             'is_featured' => (bool) ($payload['is_featured'] ?? false),

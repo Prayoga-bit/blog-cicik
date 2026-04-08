@@ -5,3 +5,19 @@
 [x-cloak] {
     display: none !important;
 }
+
+.blog-rich-text > * + * {
+    margin-top: 1.25rem;
+}
+
+.blog-rich-text ul,
+.blog-rich-text ol {
+    padding-left: 1.5rem;
+}
+
+.blog-rich-text blockquote {
+    border-left: 4px solid #f5cf6b;
+    padding-left: 1rem;
+    color: #6b7280;
+    font-style: italic;
+}

@@ -5,9 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
 
 class Blog extends Model
 {
+    use HasRichText;
+
     protected $fillable = [
         'title',
         'slug',
@@ -16,6 +19,10 @@ class Blog extends Model
         'featured_image',
         'is_featured',
         'author_id',
+    ];
+
+    protected $richTextAttributes = [
+        'content',
     ];
 
     protected $casts = [
