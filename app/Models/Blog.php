@@ -11,6 +11,15 @@ class Blog extends Model
 {
     use HasRichText;
 
+    protected static function booted(): void
+    {
+        static::creating(function (self $blog): void {
+            if (! array_key_exists('content', $blog->attributes) || $blog->attributes['content'] === null) {
+                $blog->attributes['content'] = '';
+            }
+        });
+    }
+
     protected $fillable = [
         'title',
         'slug',

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Services;
 
 use App\Models\Gallery;
@@ -13,6 +12,18 @@ class GalleryAdminService
     public function getEditableItems(): Collection
     {
         return Gallery::query()
+            ->with('user:id,name')
+            ->latest('id')
+            ->get();
+    }
+
+    /**
+     * Retrieve gallery records for user editing (only their own).
+     */
+    public function getUserEditableItems(int $userId): Collection
+    {
+        return Gallery::query()
+            ->where('user_id', $userId)
             ->with('user:id,name')
             ->latest('id')
             ->get();

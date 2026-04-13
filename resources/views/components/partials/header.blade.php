@@ -17,9 +17,39 @@
 
             <!-- Desktop CTA -->
             @auth
-                <x-ui.button href="{{ url('/dashboard') }}" class="hidden md:inline-flex px-6 md:px-8 py-2 md:py-3">
-                    Dashboard
-                </x-ui.button>
+                <div class="hidden md:flex items-center gap-4">
+                    <x-dropdown align="right" width="48">
+                        <x-slot name="trigger">
+                            <button class="w-10 h-10 rounded-full bg-brand-yellow text-brand-dark font-semibold flex items-center justify-center hover:bg-yellow-400 transition-colors" title="{{ auth()->user()->name }}">
+                                {{ auth()->user()->initials() }}
+                            </button>
+                        </x-slot>
+                        <x-slot name="content">
+                            @if(auth()->user()->is_admin)
+                                <x-dropdown-link href="{{ url('/dashboard') }}" wire:navigate>
+                                    {{ __('Admin Dashboard') }}
+                                </x-dropdown-link>
+                                <hr class="border-gray-100">
+                            @endif
+                            <x-dropdown-link href="{{ route('user.gallery-editor') }}" wire:navigate>
+                                {{ __('My Gallery') }}
+                            </x-dropdown-link>
+                            <x-dropdown-link href="{{ route('user.blog-editor') }}" wire:navigate>
+                                {{ __('My Blog') }}
+                            </x-dropdown-link>
+                            <x-dropdown-link href="{{ route('profile') }}" wire:navigate>
+                                {{ __('Profile') }}
+                            </x-dropdown-link>
+                            <hr class="border-gray-100">
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <x-dropdown-link href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();">
+                                    {{ __('Log Out') }}
+                                </x-dropdown-link>
+                            </form>
+                        </x-slot>
+                    </x-dropdown>
+                </div>
             @else
                 <x-ui.button href="{{ route('login') }}" class="hidden md:inline-flex px-6 md:px-8 py-2 md:py-3">
                     Login
@@ -72,9 +102,23 @@
             <a href="/contact" class="py-2 @if(request()->is('contact')) underline @else hover:underline @endif">Contact Us</a>
             <hr class="border-brand-dark/10">
             @auth
-                <a href="{{ url('/dashboard') }}" class="inline-flex items-center justify-center bg-brand-yellow text-brand-dark font-medium rounded-full px-6 py-3 hover:bg-yellow-400 transition-colors">
-                    Dashboard
+                @if(auth()->user()->is_admin)
+                    <a href="{{ url('/dashboard') }}" class="inline-flex items-center justify-center bg-brand-yellow text-brand-dark font-medium rounded-full px-6 py-3 hover:bg-yellow-400 transition-colors">
+                        Admin Dashboard
+                    </a>
+                @endif
+                <a href="{{ route('user.gallery-editor') }}" wire:navigate class="inline-flex items-center justify-center bg-brand-yellow text-brand-dark font-medium rounded-full px-6 py-3 hover:bg-yellow-400 transition-colors">
+                    My Gallery
                 </a>
+                <a href="{{ route('user.blog-editor') }}" wire:navigate class="inline-flex items-center justify-center bg-brand-yellow text-brand-dark font-medium rounded-full px-6 py-3 hover:bg-yellow-400 transition-colors">
+                    My Blog
+                </a>
+                <form method="POST" action="{{ route('logout') }}" class="mt-2">
+                    @csrf
+                    <button type="submit" class="w-full inline-flex items-center justify-center bg-gray-200 text-brand-dark font-medium rounded-full px-6 py-3 hover:bg-gray-300 transition-colors">
+                        Log Out
+                    </button>
+                </form>
             @else
                 <a href="{{ route('login') }}" class="inline-flex items-center justify-center bg-brand-yellow text-brand-dark font-medium rounded-full px-6 py-3 hover:bg-yellow-400 transition-colors">
                     Login

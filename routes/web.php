@@ -20,13 +20,24 @@ Route::get('/contact', [PageController::class, 'contact'])->name('contact');
 //Authenticated Routes
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::view('dashboard', 'dashboard')->name('dashboard');
-    Route::get('page-section', [PageSectionController::class, 'index'])->name('page-section');
-    Route::get('team-members', [TeamMemberController::class, 'index'])->name('team-members');
-    Route::get('project-areas', [ProjectAreaController::class, 'index'])->name('project-areas');
-    Route::get('contact-messages', [ContactMessageController::class, 'index'])->name('contact-messages');
+    
+    // Admin Routes
+    Route::middleware('admin')->group(function () {
+        Route::get('page-section', [PageSectionController::class, 'index'])->name('page-section');
+        Route::get('team-members', [TeamMemberController::class, 'index'])->name('team-members');
+        Route::get('project-areas', [ProjectAreaController::class, 'index'])->name('project-areas');
+        Route::get('contact-messages', [ContactMessageController::class, 'index'])->name('contact-messages');
+    });
+    
+    // Gallery and Blog - both admin and regular users
     Route::get('gallery-editor', [GalleryController::class, 'index'])->name('gallery-editor');
     Route::get('blog-editor', [BlogController::class, 'index'])->name('blog-editor');
     Route::get('blog-editor/{blog}/edit', [BlogController::class, 'edit'])->name('blog-editor.edit');
+    
+    // User-specific routes (for regular users)
+    Route::get('user/gallery', [GalleryController::class, 'userIndex'])->name('user.gallery-editor');
+    Route::get('user/blog', [BlogController::class, 'userIndex'])->name('user.blog-editor');
+    Route::get('user/blog/{blog}/edit', [BlogController::class, 'userEdit'])->name('user.blog-editor.edit');
 });
     
 

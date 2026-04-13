@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Services;
 
 use App\Models\Blog;
@@ -13,6 +12,29 @@ class BlogAdminService
     public function getEditablePosts(int $perPage = 12): LengthAwarePaginator
     {
         return Blog::query()
+            ->withRichText('content')
+            ->select([
+                'id',
+                'title',
+                'slug',
+                'category',
+                'featured_image',
+                'is_featured',
+                'author_id',
+                'created_at',
+            ])
+            ->with('author:id,name')
+            ->latest('id')
+            ->paginate($perPage);
+    }
+
+    /**
+     * Retrieve blog records for user editing (only their own).
+     */
+    public function getUserEditablePosts(int $userId, int $perPage = 12): LengthAwarePaginator
+    {
+        return Blog::query()
+            ->where('author_id', $userId)
             ->withRichText('content')
             ->select([
                 'id',

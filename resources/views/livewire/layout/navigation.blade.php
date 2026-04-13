@@ -33,18 +33,20 @@ new class extends Component
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" wire:navigate>
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('page-section')" :active="request()->routeIs('page-section')" wire:navigate>
-                        {{ __('Page Section') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('team-members')" :active="request()->routeIs('team-members')" wire:navigate>
-                        {{ __('Team Members') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('project-areas')" :active="request()->routeIs('project-areas')" wire:navigate>
-                        {{ __('Project Areas') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('contact-messages')" :active="request()->routeIs('contact-messages')" wire:navigate>
-                        {{ __('Contact Messages') }}
-                    </x-nav-link>
+                    @if(auth()->user()->is_admin)
+                        <x-nav-link :href="route('page-section')" :active="request()->routeIs('page-section')" wire:navigate>
+                            {{ __('Page Section') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('team-members')" :active="request()->routeIs('team-members')" wire:navigate>
+                            {{ __('Team Members') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('project-areas')" :active="request()->routeIs('project-areas')" wire:navigate>
+                            {{ __('Project Areas') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('contact-messages')" :active="request()->routeIs('contact-messages')" wire:navigate>
+                            {{ __('Contact Messages') }}
+                        </x-nav-link>
+                    @endif
                     <x-nav-link :href="route('gallery-editor')" :active="request()->routeIs('gallery-editor')" wire:navigate>
                         {{ __('Gallery') }}
                     </x-nav-link>
@@ -102,30 +104,28 @@ new class extends Component
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" wire:navigate>
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('page-section')" :active="request()->routeIs('page-section')" wire:navigate>
-                {{ __('Page Section') }}
-            </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('team-members')" :active="request()->routeIs('team-members')" wire:navigate>
-                {{ __('Team Members') }}
-            </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('project-areas')" :active="request()->routeIs('project-areas')" wire:navigate>
-                {{ __('Project Areas') }}
-            </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('contact-messages')" :active="request()->routeIs('contact-messages')" wire:navigate>
-                {{ __('Contact Messages') }}
-            </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('gallery-editor')" :active="request()->routeIs('gallery-editor')" wire:navigate>
-                {{ __('Gallery') }}
-            </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('blog-editor')" :active="request()->routeIs('blog-editor')" wire:navigate>
-                {{ __('Blog') }}
-            </x-responsive-nav-link>
-        </div>
-
-        <!-- Responsive Settings Options -->
-        <div class="pt-4 pb-1 border-t border-gray-200">
-            <div class="px-4">
-                <div class="font-medium text-base text-gray-800" x-data="{{ json_encode(['name' => auth()->user()->name]) }}" x-text="name" x-on:profile-updated.window="name = $event.detail.name"></div>
+                @if(auth()->user()->is_admin)
+                    <x-responsive-nav-link :href="route('page-section')" :active="request()->routeIs('page-section')" wire:navigate>
+                        {{ __('Page Section') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('team-members')" :active="request()->routeIs('team-members')" wire:navigate>
+                        {{ __('Team Members') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('project-areas')" :active="request()->routeIs('project-areas')" wire:navigate>
+                        {{ __('Project Areas') }}
+                    </x-responsive-nav-link>
+                @endif
+                <x-responsive-nav-link :href="route('gallery-editor')" :active="request()->routeIs('gallery-editor')" wire:navigate>
+                    {{ __('Gallery') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('blog-editor')" :active="request()->routeIs('blog-editor')" wire:navigate>
+                    {{ __('Blog') }}
+                </x-responsive-nav-link>
+                @if(auth()->user()->is_admin)
+                    <x-responsive-nav-link :href="route('contact-messages')" :active="request()->routeIs('contact-messages')" wire:navigate>
+                        {{ __('Contact Messages') }}
+                    </x-responsive-nav-link>
+                @endif
                 <div class="font-medium text-sm text-gray-500">{{ auth()->user()->email }}</div>
             </div>
 

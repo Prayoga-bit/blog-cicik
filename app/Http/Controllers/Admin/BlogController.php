@@ -17,4 +17,17 @@ class BlogController extends Controller
     {
         return view('blog-edit', compact('blog'));
     }
+
+    public function userIndex(): View
+    {
+        return view('user-blog');
+    }
+
+    public function userEdit(Blog $blog): View
+    {
+        if ($blog->author_id !== auth()->id()) {
+            abort(403, 'Unauthorized to edit this blog.');
+        }
+        return view('blog-edit', compact('blog'));
+    }
 }

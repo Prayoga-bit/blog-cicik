@@ -11,4 +11,9 @@ class GalleryController extends Controller
 	{
 		return view('gallery');
 	}
+
+	public function userIndex(): View
+	{
+		return view('user-gallery');
+	}
 }
