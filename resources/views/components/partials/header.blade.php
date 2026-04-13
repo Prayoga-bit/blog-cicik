@@ -30,13 +30,20 @@
                                     {{ __('Admin Dashboard') }}
                                 </x-dropdown-link>
                                 <hr class="border-gray-100">
+                                <x-dropdown-link href="{{ route('gallery-editor') }}" wire:navigate>
+                                    {{ __('My Gallery') }}
+                                </x-dropdown-link>
+                                <x-dropdown-link href="{{ route('blog-editor') }}" wire:navigate>
+                                    {{ __('My Blog') }}
+                                </x-dropdown-link>
+                            @else
+                                <x-dropdown-link href="{{ route('user.gallery-editor') }}" wire:navigate>
+                                    {{ __('My Gallery') }}
+                                </x-dropdown-link>
+                                <x-dropdown-link href="{{ route('user.blog-editor') }}" wire:navigate>
+                                    {{ __('My Blog') }}
+                                </x-dropdown-link>
                             @endif
-                            <x-dropdown-link href="{{ route('user.gallery-editor') }}" wire:navigate>
-                                {{ __('My Gallery') }}
-                            </x-dropdown-link>
-                            <x-dropdown-link href="{{ route('user.blog-editor') }}" wire:navigate>
-                                {{ __('My Blog') }}
-                            </x-dropdown-link>
                             <x-dropdown-link href="{{ route('profile') }}" wire:navigate>
                                 {{ __('Profile') }}
                             </x-dropdown-link>

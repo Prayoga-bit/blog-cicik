@@ -46,13 +46,20 @@ new class extends Component
                         <x-nav-link :href="route('contact-messages')" :active="request()->routeIs('contact-messages')" wire:navigate>
                             {{ __('Contact Messages') }}
                         </x-nav-link>
+                        <x-nav-link :href="route('gallery-editor')" :active="request()->routeIs('gallery-editor')" wire:navigate>
+                            {{ __('Gallery') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('blog-editor')" :active="request()->routeIs('blog-editor')" wire:navigate>
+                            {{ __('Blog') }}
+                        </x-nav-link>
+                    @else
+                        <x-nav-link :href="route('user.gallery-editor')" :active="request()->routeIs('user.gallery-editor')" wire:navigate>
+                            {{ __('Gallery') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('user.blog-editor')" :active="request()->routeIs('user.blog-editor')" wire:navigate>
+                            {{ __('Blog') }}
+                        </x-nav-link>
                     @endif
-                    <x-nav-link :href="route('gallery-editor')" :active="request()->routeIs('gallery-editor')" wire:navigate>
-                        {{ __('Gallery') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('blog-editor')" :active="request()->routeIs('blog-editor')" wire:navigate>
-                        {{ __('Blog') }}
-                    </x-nav-link>
                 </div>
             </div>
 
@@ -114,19 +121,23 @@ new class extends Component
                     <x-responsive-nav-link :href="route('project-areas')" :active="request()->routeIs('project-areas')" wire:navigate>
                         {{ __('Project Areas') }}
                     </x-responsive-nav-link>
-                @endif
-                <x-responsive-nav-link :href="route('gallery-editor')" :active="request()->routeIs('gallery-editor')" wire:navigate>
-                    {{ __('Gallery') }}
-                </x-responsive-nav-link>
-                <x-responsive-nav-link :href="route('blog-editor')" :active="request()->routeIs('blog-editor')" wire:navigate>
-                    {{ __('Blog') }}
-                </x-responsive-nav-link>
-                @if(auth()->user()->is_admin)
                     <x-responsive-nav-link :href="route('contact-messages')" :active="request()->routeIs('contact-messages')" wire:navigate>
                         {{ __('Contact Messages') }}
                     </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('gallery-editor')" :active="request()->routeIs('gallery-editor')" wire:navigate>
+                        {{ __('Gallery') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('blog-editor')" :active="request()->routeIs('blog-editor')" wire:navigate>
+                        {{ __('Blog') }}
+                    </x-responsive-nav-link>
+                @else
+                    <x-responsive-nav-link :href="route('user.gallery-editor')" :active="request()->routeIs('user.gallery-editor')" wire:navigate>
+                        {{ __('Gallery') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('user.blog-editor')" :active="request()->routeIs('user.blog-editor')" wire:navigate>
+                        {{ __('Blog') }}
+                    </x-responsive-nav-link>
                 @endif
-                <div class="font-medium text-sm text-gray-500">{{ auth()->user()->email }}</div>
             </div>
 
             <div class="mt-3 space-y-1">

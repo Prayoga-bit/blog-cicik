@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\ProjectAreaController;
 use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\BlogController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,7 +20,7 @@ Route::get('/contact', [PageController::class, 'contact'])->name('contact');
 
 //Authenticated Routes
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::view('dashboard', 'dashboard')->name('dashboard');
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
     
     // Admin Routes
     Route::middleware('admin')->group(function () {
@@ -27,12 +28,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('team-members', [TeamMemberController::class, 'index'])->name('team-members');
         Route::get('project-areas', [ProjectAreaController::class, 'index'])->name('project-areas');
         Route::get('contact-messages', [ContactMessageController::class, 'index'])->name('contact-messages');
+        Route::get('gallery-editor', [GalleryController::class, 'index'])->name('gallery-editor');
+        Route::get('blog-editor', [BlogController::class, 'index'])->name('blog-editor');
+        Route::get('blog-editor/{blog}/edit', [BlogController::class, 'edit'])->name('blog-editor.edit');
     });
-    
-    // Gallery and Blog - both admin and regular users
-    Route::get('gallery-editor', [GalleryController::class, 'index'])->name('gallery-editor');
-    Route::get('blog-editor', [BlogController::class, 'index'])->name('blog-editor');
-    Route::get('blog-editor/{blog}/edit', [BlogController::class, 'edit'])->name('blog-editor.edit');
     
     // User-specific routes (for regular users)
     Route::get('user/gallery', [GalleryController::class, 'userIndex'])->name('user.gallery-editor');
