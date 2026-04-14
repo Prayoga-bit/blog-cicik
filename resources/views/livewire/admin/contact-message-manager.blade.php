@@ -1,4 +1,8 @@
-<div class="space-y-6 py-12">
+<div
+    x-data="{ showDeleteOverlay: false, deleteTargetId: null }"
+    @keydown.escape.window="showDeleteOverlay = false; deleteTargetId = null"
+    class="space-y-6 py-12"
+>
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="space-y-6">
             <div class="rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
@@ -42,8 +46,7 @@
                         <div class="flex justify-end">
                             <button
                                 type="button"
-                                wire:click="deleteMessage({{ $message->id }})"
-                                wire:confirm="Delete this message?"
+                                x-on:click="deleteTargetId = {{ $message->id }}; showDeleteOverlay = true"
                                 class="inline-flex items-center rounded-lg border border-red-200 bg-red-50 px-4 py-2 text-sm font-semibold text-red-700 transition hover:bg-red-100"
                             >
                                 Delete Message
@@ -64,4 +67,11 @@
             @endif
         </div>
     </div>
+
+    <x-ui.delete-confirm-overlay
+        confirm-action="deleteMessage"
+        title="Delete this message?"
+        message="This action cannot be undone. The contact message will be permanently deleted."
+        aria-label="Delete contact message confirmation"
+    />
 </div>

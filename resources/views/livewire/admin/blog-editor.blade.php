@@ -1,4 +1,8 @@
-<div class="space-y-6 rounded-[32px] bg-brand-light/70 py-12 shadow-sm ring-1 ring-brand-green/5">
+<div
+    x-data="{ showDeleteOverlay: false, deleteTargetId: null }"
+    @keydown.escape.window="showDeleteOverlay = false; deleteTargetId = null"
+    class="space-y-6 rounded-[32px] bg-brand-light/70 py-12 shadow-sm ring-1 ring-brand-green/5"
+>
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="space-y-6">
             @if ($statusMessage)
@@ -66,8 +70,7 @@
                                     <button
                                         type="button"
                                         class="inline-flex items-center gap-2 text-sm font-semibold text-red-600 transition hover:text-red-700"
-                                        wire:click="deletePost({{ $post['id'] }})"
-                                        wire:confirm="Hapus blog ini?"
+                                        x-on:click="deleteTargetId = {{ $post['id'] }}; showDeleteOverlay = true"
                                     >
                                         Delete
                                         <i class="fa-regular fa-trash-can"></i>
@@ -86,4 +89,11 @@
             <x-ui.pagination :paginator="$posts" />
         </div>
     </div>
+
+    <x-ui.delete-confirm-overlay
+        confirm-action="deletePost"
+        title="Hapus blog ini?"
+        message="Tindakan ini tidak bisa dibatalkan. Data blog akan dihapus permanen."
+        aria-label="Konfirmasi hapus blog"
+    />
 </div>

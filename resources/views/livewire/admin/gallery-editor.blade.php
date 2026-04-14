@@ -1,4 +1,8 @@
-<div class="space-y-6 rounded-[32px] bg-brand-light/70 py-12 shadow-sm ring-1 ring-brand-green/5">
+<div
+    x-data="{ showDeleteOverlay: false, deleteTargetId: null }"
+    @keydown.escape.window="showDeleteOverlay = false; deleteTargetId = null"
+    class="space-y-6 rounded-[32px] bg-brand-light/70 py-12 shadow-sm ring-1 ring-brand-green/5"
+>
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="mb-6 space-y-4">
             @if ($statusMessage)
@@ -62,8 +66,7 @@
                             <button
                                 type="button"
                                 class="inline-flex items-center gap-2 text-sm font-semibold text-red-600 transition hover:text-red-700"
-                                wire:click="deleteItem({{ $item['id'] }})"
-                                wire:confirm="Hapus gallery ini?"
+                                x-on:click="deleteTargetId = {{ $item['id'] }}; showDeleteOverlay = true"
                             >
                                 Delete
                                 <i class="fa-regular fa-trash-can"></i>
@@ -82,4 +85,11 @@
             <x-ui.pagination :paginator="$items" />
         </div>
     </div>
+
+    <x-ui.delete-confirm-overlay
+        confirm-action="deleteItem"
+        title="Hapus gallery ini?"
+        message="Tindakan ini tidak bisa dibatalkan. Data gallery akan dihapus permanen."
+        aria-label="Konfirmasi hapus gallery"
+    />
 </div>
