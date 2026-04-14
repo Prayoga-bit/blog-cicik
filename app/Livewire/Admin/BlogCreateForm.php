@@ -2,40 +2,33 @@
 
 namespace App\Livewire\Admin;
 
-use App\Models\Blog;
 use App\Services\BlogAdminService;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 
-class BlogEditForm extends Component
+class BlogCreateForm extends Component
 {
-    public Blog $blog;
-
     public bool $isUserView = false;
 
     public string $title = '';
+
     public string $slug = '';
+
     public string $content = '';
+
     public ?string $category = null;
+
     public ?string $featured_image = null;
+
     public bool $is_featured = false;
 
-    public string $statusMessage = '';
-
-    public function mount(Blog $blog, bool $isUserView = false): void
+    public function mount(bool $isUserView = false): void
     {
-        $this->blog = $blog;
         $this->isUserView = $isUserView;
-        $this->title = (string) $blog->title;
-        $this->slug = (string) $blog->slug;
-        $this->content = $blog->content?->toEditorHtml() ?? '';
-        $this->category = $blog->category;
-        $this->featured_image = $blog->featured_image;
-        $this->is_featured = (bool) $blog->is_featured;
     }
 
-    public function save(BlogAdminService $blogAdminService): void
+    public function save(BlogAdminService $blogAdminService): mixed
     {
         if (blank($this->slug)) {
             $this->slug = Str::slug($this->title);
@@ -43,7 +36,7 @@ class BlogEditForm extends Component
 
         $this->validate([
             'title' => ['required', 'string', 'max:255'],
-            'slug' => ['required', 'string', 'max:255', Rule::unique('blogs', 'slug')->ignore($this->blog->id)],
+            'slug' => ['required', 'string', 'max:255', Rule::unique('blogs', 'slug')],
             'content' => ['required', 'string'],
             'category' => ['nullable', 'string', 'max:255'],
             'featured_image' => ['nullable', 'string', 'max:2048'],
@@ -51,8 +44,8 @@ class BlogEditForm extends Component
         ]);
 
         $payload = [
-            'title' => $this->title,
-            'slug' => $this->slug,
+            'title' => trim($this->title),
+            'slug' => trim($this->slug),
             'content' => $this->content,
             'category' => $this->category !== null ? trim($this->category) : null,
             'featured_image' => $this->featured_image !== null ? trim($this->featured_image) : null,
@@ -62,17 +55,16 @@ class BlogEditForm extends Component
         $payload['category'] = $payload['category'] === '' ? null : $payload['category'];
         $payload['featured_image'] = $payload['featured_image'] === '' ? null : $payload['featured_image'];
 
-        if ($this->isUserView) {
-            $blogAdminService->updateUserPost($this->blog->id, (int) auth()->id(), $payload);
-        } else {
-            $blogAdminService->updatePost($this->blog->id, $payload);
-        }
+        $blog = $blogAdminService->createPost($payload, (int) auth()->id());
 
-        $this->statusMessage = 'Data blog berhasil diperbarui.';
+        $routeName = $this->isUserView ? 'user.blog-editor.edit' : 'blog-editor.edit';
+
+        return redirect()->route($routeName, $blog->id)
+            ->with('status', 'Blog berhasil dibuat.');
     }
 
-    public function render()
+    public function render(): \Illuminate\View\View
     {
-        return view('livewire.admin.blog-edit-form');
+        return view('livewire.admin.blog-create-form');
     }
 }

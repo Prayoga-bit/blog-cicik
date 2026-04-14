@@ -17,7 +17,7 @@
 
 	<div class="bg-brand-light min-h-screen pb-12">
 		<div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-			<livewire:admin.user-blog-editor />
+			<livewire:admin.blog-editor :user-only="true" />
 		</div>
 	</div>
 </x-app-layout>

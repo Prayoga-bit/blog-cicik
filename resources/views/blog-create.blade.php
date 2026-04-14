@@ -6,10 +6,10 @@
                     {{ $isUserView ? 'My Blog' : 'Editorial' }}
                 </span>
                 <h2 class="font-cursive text-4xl leading-tight text-brand-dark md:text-5xl">
-                    Edit Blog Post
+                    Create Blog Post
                 </h2>
                 <p class="mt-1 text-sm text-brand-gray">
-                    Update the selected blog post details.
+                    Add a new blog post.
                 </p>
             </div>
             <a href="{{ $isUserView ? route('user.blog-editor') : route('blog-editor') }}" class="inline-flex items-center gap-2 rounded-full border border-brand-green/10 bg-white px-4 py-2 text-sm font-semibold text-brand-green shadow-sm transition hover:-translate-y-0.5 hover:border-brand-green hover:bg-brand-light hover:text-brand-dark">
@@ -21,7 +21,7 @@
 
     <div class="bg-brand-light min-h-screen py-10">
         <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-            <livewire:admin.blog-edit-form :blog="$blog" :is-user-view="$isUserView" />
+            <livewire:admin.blog-create-form :is-user-view="$isUserView" />
         </div>
     </div>
 </x-app-layout>

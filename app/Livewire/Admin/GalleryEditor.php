@@ -3,56 +3,64 @@
 namespace App\Livewire\Admin;
 
 use App\Services\GalleryAdminService;
+use Illuminate\Support\Str;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class GalleryEditor extends Component
 {
-    public array $items = [];
+    use WithPagination;
 
-    public ?int $savedItemId = null;
+    public bool $userOnly = false;
 
     public string $statusMessage = '';
 
-    public function mount(GalleryAdminService $galleryAdminService): void
+    public ?int $deletedItemId = null;
+
+    protected string $paginationTheme = 'tailwind';
+
+    public function mount(bool $userOnly = false): void
     {
-        $this->items = $galleryAdminService->getEditableItems()
-            ->map(function ($item): array {
-                return [
-                    'id' => $item->id,
-                    'title' => $item->title,
-                    'description' => $item->description,
-                    'image_url' => $item->image_url,
-                    'author_name' => $item->user?->name ?? 'Gallery Team',
-                ];
-            })
-            ->all();
+        $this->userOnly = $userOnly;
     }
 
-    public function saveItem(int $itemId, GalleryAdminService $galleryAdminService): void
+    public function deleteItem(int $itemId, GalleryAdminService $galleryAdminService): void
     {
-        $itemIndex = collect($this->items)->search(fn (array $item) => (int) $item['id'] === $itemId);
-
-        if ($itemIndex === false) {
-            return;
+        if ($this->userOnly) {
+            $galleryAdminService->deleteUserItem($itemId, (int) auth()->id());
+        } else {
+            $galleryAdminService->deleteItem($itemId);
         }
 
-        $this->validate([
-            "items.{$itemIndex}.title" => ['required', 'string', 'max:255'],
-            "items.{$itemIndex}.description" => ['nullable', 'string', 'max:65535'],
-            "items.{$itemIndex}.image_url" => ['required', 'string', 'max:2048'],
-        ]);
+        $this->deletedItemId = $itemId;
+        $this->statusMessage = 'Data gallery berhasil dihapus.';
 
-        $payload = $this->items[$itemIndex];
-        $payload['image_url'] = trim((string) $payload['image_url']);
-
-        $galleryAdminService->updateItem($itemId, $payload);
-
-        $this->savedItemId = $itemId;
-        $this->statusMessage = 'Data gallery berhasil diperbarui.';
+        $this->resetPage();
     }
 
     public function render(): \Illuminate\View\View
     {
-        return view('livewire.admin.gallery-editor');
+        $service = app(GalleryAdminService::class);
+
+        $items = $this->userOnly
+            ? $service->getUserEditableItems((int) auth()->id(), 12)
+            : $service->getEditableItems(12);
+
+        $items->setCollection($items->getCollection()->map(function ($item): array {
+            return [
+                'id' => $item->id,
+                'title' => $item->title,
+                'description' => $item->description,
+                'image_url' => $item->image_url,
+                'author_name' => $item->user?->name ?? 'Gallery Team',
+                'created_at' => optional($item->created_at)->format('M d, Y'),
+                'description_excerpt' => Str::limit(strip_tags((string) $item->description), 130),
+            ];
+        }));
+
+        return view('livewire.admin.gallery-editor', [
+            'items' => $items,
+            'isUserView' => $this->userOnly,
+        ]);
     }
 }

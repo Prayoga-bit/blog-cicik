@@ -12,6 +12,17 @@
                     Blog #{{ $deletedPostId }} berhasil dihapus.
                 </div>
             @endif
+
+            <div class="flex justify-end">
+                <a
+                    href="{{ $isUserView ? route('user.blog-editor.create') : route('blog-editor.create') }}"
+                    class="inline-flex items-center gap-2 rounded-full bg-brand-green px-4 py-2 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-brand-dark"
+                >
+                    <i class="fa-solid fa-plus"></i>
+                    Add Blog
+                </a>
+            </div>
+
             <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
                 @forelse ($posts as $post)
                     <article class="overflow-hidden rounded-2xl border border-brand-green/10 bg-white shadow-sm transition-shadow duration-200 hover:shadow-md" wire:key="blog-post-{{ $post['id'] }}">
@@ -47,7 +58,7 @@
                                 </span>
 
                                 <div class="flex items-center gap-3">
-                                    <a href="{{ route('blog-editor.edit', $post['id']) }}" class="inline-flex items-center gap-2 text-sm font-semibold text-brand-green transition hover:text-brand-dark">
+                                    <a href="{{ $isUserView ? route('user.blog-editor.edit', $post['id']) : route('blog-editor.edit', $post['id']) }}" class="inline-flex items-center gap-2 text-sm font-semibold text-brand-green transition hover:text-brand-dark">
                                         Edit
                                         <i class="fa-solid fa-arrow-right"></i>
                                     </a>

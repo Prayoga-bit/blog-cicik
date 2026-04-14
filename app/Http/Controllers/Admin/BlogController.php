@@ -13,9 +13,19 @@ class BlogController extends Controller
 		return view('blog');
 	}
 
+    public function create(): View
+    {
+        return view('blog-create', [
+            'isUserView' => false,
+        ]);
+    }
+
     public function edit(Blog $blog): View
     {
-        return view('blog-edit', compact('blog'));
+        return view('blog-edit', [
+            'blog' => $blog,
+            'isUserView' => false,
+        ]);
     }
 
     public function userIndex(): View
@@ -23,11 +33,22 @@ class BlogController extends Controller
         return view('user-blog');
     }
 
+    public function userCreate(): View
+    {
+        return view('blog-create', [
+            'isUserView' => true,
+        ]);
+    }
+
     public function userEdit(Blog $blog): View
     {
         if ($blog->author_id !== auth()->id()) {
             abort(403, 'Unauthorized to edit this blog.');
         }
-        return view('blog-edit', compact('blog'));
+
+        return view('blog-edit', [
+            'blog' => $blog,
+            'isUserView' => true,
+        ]);
     }
 }

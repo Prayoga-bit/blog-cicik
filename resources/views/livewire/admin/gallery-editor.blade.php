@@ -1,103 +1,85 @@
-<div class="space-y-6 py-12">
+<div class="space-y-6 rounded-[32px] bg-brand-light/70 py-12 shadow-sm ring-1 ring-brand-green/5">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div class="space-y-6">
+        <div class="mb-6 space-y-4">
             @if ($statusMessage)
-                <div class="rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-800">
+                <div class="rounded-lg border border-brand-yellow/30 bg-brand-yellow/20 px-4 py-3 text-sm text-brand-dark">
                     {{ $statusMessage }}
                 </div>
             @endif
 
-            @forelse ($items as $index => $item)
-                <section class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm" wire:key="gallery-item-{{ $item['id'] }}">
-                    <div class="border-b border-gray-200 px-6 py-4">
-                        <div class="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
-                            <div>
-                                <h3 class="text-lg font-semibold text-gray-900">
-                                    {{ $item['title'] ?: 'Gallery Item' }}
-                                </h3>
-                                <p class="text-sm text-gray-500">
-                                    {{ __('Author:') }} {{ $item['author_name'] }}
-                                </p>
-                            </div>
+            @if ($deletedItemId)
+                <div class="rounded-lg border border-brand-green/20 bg-white px-4 py-3 text-sm text-brand-dark shadow-sm">
+                    Gallery #{{ $deletedItemId }} berhasil dihapus.
+                </div>
+            @endif
 
-                            <span class="inline-flex items-center rounded-full bg-gray-100 px-3 py-1 text-xs font-medium uppercase tracking-wide text-gray-600">
-                                #{{ $item['id'] }}
-                            </span>
-                        </div>
+            <div class="flex justify-end">
+                <a
+                    href="{{ $isUserView ? route('user.gallery-editor.create') : route('gallery-editor.create') }}"
+                    class="inline-flex items-center gap-2 rounded-full bg-brand-green px-4 py-2 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-brand-dark"
+                >
+                    <i class="fa-solid fa-plus"></i>
+                    Add Gallery
+                </a>
+            </div>
+        </div>
+
+        <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            @forelse ($items as $item)
+                <article class="overflow-hidden rounded-2xl border border-brand-green/10 bg-white shadow-sm transition-shadow duration-200 hover:shadow-md" wire:key="gallery-item-{{ $item['id'] }}">
+                    <div class="relative h-48 w-full bg-slate-100">
+                        @if ($item['image_url'])
+                            <img src="{{ $item['image_url'] }}" alt="{{ $item['title'] ?: 'Gallery image' }}" loading="lazy" class="h-full w-full object-cover" />
+                        @else
+                            <div class="flex h-full w-full items-center justify-center bg-gradient-to-br from-brand-light to-white text-sm text-brand-muted">
+                                No image
+                            </div>
+                        @endif
+
+                        <span class="absolute right-3 top-3 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-brand-dark shadow-sm">
+                            #{{ $item['id'] }}
+                        </span>
                     </div>
 
-                    <form wire:submit.prevent="saveItem({{ $item['id'] }})" class="space-y-4 px-6 py-6">
-                        <div>
-                            <label class="mb-1 block text-sm font-medium text-gray-900" for="gallery-title-{{ $item['id'] }}">
-                                {{ __('Title') }}
-                            </label>
-                            <input
-                                id="gallery-title-{{ $item['id'] }}"
-                                type="text"
-                                wire:model="items.{{ $index }}.title"
-                                class="block w-full rounded-lg border-gray-300 bg-white text-sm shadow-sm focus:border-brand-green focus:ring-brand-green"
-                            />
-                            @error('items.' . $index . '.title')
-                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
+                    <div class="space-y-3 px-5 py-4">
+                        <div class="space-y-1">
+                            <h3 class="text-lg font-semibold text-brand-dark">
+                                {{ $item['title'] ?: 'Gallery Item' }}
+                            </h3>
+                            <p class="text-xs text-brand-muted">{{ $item['author_name'] }} · {{ $item['created_at'] ?? 'Draft' }}</p>
                         </div>
 
-                        <div>
-                            <label class="mb-1 block text-sm font-medium text-gray-900" for="gallery-description-{{ $item['id'] }}">
-                                {{ __('Description') }}
-                            </label>
-                            <textarea
-                                id="gallery-description-{{ $item['id'] }}"
-                                wire:model="items.{{ $index }}.description"
-                                rows="4"
-                                class="block w-full rounded-lg border-gray-300 bg-white text-sm shadow-sm focus:border-brand-green focus:ring-brand-green"
-                            ></textarea>
-                            @error('items.' . $index . '.description')
-                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
-                        </div>
+                        <p class="text-sm text-brand-gray">
+                            {{ $item['description_excerpt'] ?: 'No description available yet.' }}
+                        </p>
 
-                        <div>
-                            <label class="mb-1 block text-sm font-medium text-gray-900" for="gallery-image-{{ $item['id'] }}">
-                                {{ __('Image URL') }}
-                            </label>
-                            <input
-                                id="gallery-image-{{ $item['id'] }}"
-                                type="text"
-                                wire:model="items.{{ $index }}.image_url"
-                                placeholder="https://..."
-                                class="block w-full rounded-lg border-gray-300 bg-white text-sm shadow-sm focus:border-brand-green focus:ring-brand-green"
-                            />
-                            @error('items.' . $index . '.image_url')
-                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
-                        </div>
-
-                        <div class="flex items-center justify-between gap-4">
-                            @if ($savedItemId === $item['id'])
-                                <p class="text-sm text-green-700">
-                                    {{ __('Saved.') }}
-                                </p>
-                            @else
-                                <span></span>
-                            @endif
+                        <div class="flex items-center justify-end gap-3 pt-2">
+                            <a href="{{ $isUserView ? route('user.gallery-editor.edit', $item['id']) : route('gallery-editor.edit', $item['id']) }}" class="inline-flex items-center gap-2 text-sm font-semibold text-brand-green transition hover:text-brand-dark">
+                                Edit
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </a>
 
                             <button
-                                type="submit"
-                                class="inline-flex items-center rounded-lg bg-brand-green px-4 py-2 text-sm font-semibold text-white transition hover:bg-brand-dark disabled:cursor-not-allowed disabled:opacity-75"
-                                wire:loading.attr="disabled"
+                                type="button"
+                                class="inline-flex items-center gap-2 text-sm font-semibold text-red-600 transition hover:text-red-700"
+                                wire:click="deleteItem({{ $item['id'] }})"
+                                wire:confirm="Hapus gallery ini?"
                             >
-                                <span wire:loading.remove>{{ __('Save Gallery') }}</span>
-                                <span wire:loading>{{ __('Saving...') }}</span>
+                                Delete
+                                <i class="fa-regular fa-trash-can"></i>
                             </button>
                         </div>
-                    </form>
-                </section>
+                    </div>
+                </article>
             @empty
-                <div class="rounded-lg border border-dashed border-gray-300 bg-white px-6 py-10 text-center text-sm text-gray-500">
+                <div class="col-span-full rounded-lg border border-dashed border-brand-green/20 bg-white px-6 py-10 text-center text-sm text-brand-muted shadow-sm">
                     No gallery items are available yet.
                 </div>
             @endforelse
+        </div>
+
+        <div class="mt-6">
+            <x-ui.pagination :paginator="$items" />
         </div>
     </div>
 </div>

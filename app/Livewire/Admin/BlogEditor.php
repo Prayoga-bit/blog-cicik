@@ -11,15 +11,26 @@ class BlogEditor extends Component
 {
     use WithPagination;
 
+    public bool $userOnly = false;
+
     public string $statusMessage = '';
 
     public ?int $deletedPostId = null;
 
     protected string $paginationTheme = 'tailwind';
 
+    public function mount(bool $userOnly = false): void
+    {
+        $this->userOnly = $userOnly;
+    }
+
     public function deletePost(int $postId, BlogAdminService $blogAdminService): void
     {
-        $blogAdminService->deletePost($postId);
+        if ($this->userOnly) {
+            $blogAdminService->deleteUserPost($postId, (int) auth()->id());
+        } else {
+            $blogAdminService->deletePost($postId);
+        }
 
         $this->deletedPostId = $postId;
 
@@ -30,8 +41,11 @@ class BlogEditor extends Component
 
     public function render(): \Illuminate\View\View
     {
-        $posts = app(BlogAdminService::class)
-            ->getEditablePosts(12);
+        $service = app(BlogAdminService::class);
+
+        $posts = $this->userOnly
+            ? $service->getUserEditablePosts((int) auth()->id(), 12)
+            : $service->getEditablePosts(12);
 
         $posts->setCollection($posts->getCollection()->map(function ($post): array {
             return [
@@ -49,6 +63,7 @@ class BlogEditor extends Component
 
         return view('livewire.admin.blog-editor', [
             'posts' => $posts,
+            'isUserView' => $this->userOnly,
         ]);
     }
 }

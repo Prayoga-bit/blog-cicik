@@ -9,11 +9,15 @@
 					Gallery Editor
 				</h2>
 				<p class="mt-1 text-sm text-brand-gray">
-					Manage your gallery entries.
+					Manage only your gallery entries.
 				</p>
 			</div>
 		</div>
 	</x-slot>
 
-	<livewire:admin.user-gallery-editor />
+	<div class="bg-brand-light min-h-screen pb-12">
+		<div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+			<livewire:admin.gallery-editor :user-only="true" />
+		</div>
+	</div>
 </x-app-layout>
