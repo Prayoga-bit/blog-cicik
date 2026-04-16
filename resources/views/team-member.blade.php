@@ -2,15 +2,22 @@
 	<x-slot name="header">
 		<div class="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
 			<div>
-				<h2 class="text-xl font-semibold leading-tight text-gray-800">
-					Team Members
+				<span class="mb-2 inline-flex rounded-full bg-brand-yellow px-4 py-1 text-xs font-bold uppercase tracking-[0.2em] text-brand-dark">
+					Team Admin
+				</span>
+				<h2 class="font-cursive text-4xl leading-tight text-brand-dark md:text-5xl">
+					Team Members Editor
 				</h2>
-				<p class="mt-1 text-sm text-gray-500">
-					Edit team member profiles without reloading the page.
+				<p class="mt-1 text-sm text-brand-gray">
+					Manage team member profiles.
 				</p>
 			</div>
 		</div>
 	</x-slot>
 
-	<livewire:admin.team-member-editor />
+	<div class="bg-brand-light min-h-screen pb-12">
+		<div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+			<livewire:admin.team-member-editor />
+		</div>
+	</div>
 </x-app-layout>
