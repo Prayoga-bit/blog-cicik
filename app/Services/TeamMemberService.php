@@ -13,8 +13,21 @@ class TeamMemberService
     public function getEditableMembers(): Collection
     {
         return TeamMember::query()
-            ->latest('id')
+            ->orderBy('id', 'asc')
             ->get();
+    }
+
+    /**
+     * Create a new team member.
+     */
+    public function createMember(array $payload): TeamMember
+    {
+        return TeamMember::create([
+            'name' => $payload['name'],
+            'position' => $payload['position'],
+            'bio_description' => $payload['bio_description'],
+            'photo_url' => $payload['photo_url'] ?? null,
+        ]);
     }
 
     /**
@@ -28,9 +41,18 @@ class TeamMemberService
             'name' => $payload['name'] ?? $member->name,
             'position' => $payload['position'] ?? $member->position,
             'bio_description' => $payload['bio_description'] ?? $member->bio_description,
-            'photo_url' => $payload['photo_url'] ?? null,
+            'photo_url' => array_key_exists('photo_url', $payload) ? $payload['photo_url'] : $member->photo_url,
         ]);
 
         return $member;
+    }
+
+    /**
+     * Delete a team member.
+     */
+    public function deleteMember(int $memberId): void
+    {
+        $member = TeamMember::query()->findOrFail($memberId);
+        $member->delete();
     }
 }

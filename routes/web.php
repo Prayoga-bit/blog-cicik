@@ -26,6 +26,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::middleware('admin')->group(function () {
         Route::get('page-section', [PageSectionController::class, 'index'])->name('page-section');
         Route::get('team-members', [TeamMemberController::class, 'index'])->name('team-members');
+        Route::get('team-members/create', [TeamMemberController::class, 'create'])->name('team-members.create');
+        Route::get('team-members/{teamMember}/edit', [TeamMemberController::class, 'edit'])->name('team-members.edit');
         Route::get('project-areas', [ProjectAreaController::class, 'index'])->name('project-areas');
         Route::get('contact-messages', [ContactMessageController::class, 'index'])->name('contact-messages');
         Route::get('gallery-editor', [GalleryController::class, 'index'])->name('gallery-editor');
