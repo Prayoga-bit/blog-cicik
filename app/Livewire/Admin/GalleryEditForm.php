@@ -4,10 +4,14 @@ namespace App\Livewire\Admin;
 
 use App\Models\Gallery;
 use App\Services\GalleryAdminService;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class GalleryEditForm extends Component
 {
+    use WithFileUploads;
+
     public Gallery $gallery;
 
     public bool $isUserView = false;
@@ -16,7 +20,9 @@ class GalleryEditForm extends Component
 
     public ?string $description = null;
 
-    public string $image_url = '';
+    public $image;
+
+    public ?string $currentImageUrl = null;
 
     public string $statusMessage = '';
 
@@ -26,7 +32,7 @@ class GalleryEditForm extends Component
         $this->isUserView = $isUserView;
         $this->title = (string) $gallery->title;
         $this->description = $gallery->description;
-        $this->image_url = (string) $gallery->image_url;
+        $this->currentImageUrl = (string) $gallery->image_url;
     }
 
     public function save(GalleryAdminService $galleryAdminService): void
@@ -34,13 +40,22 @@ class GalleryEditForm extends Component
         $this->validate([
             'title' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string', 'max:65535'],
-            'image_url' => ['required', 'string', 'max:2048'],
+            'image' => [$this->currentImageUrl ? 'nullable' : 'required', 'image', 'max:5120'],
         ]);
+
+        $imagePath = $this->currentImageUrl;
+        if ($this->image) {
+            if ($this->currentImageUrl && !str_starts_with($this->currentImageUrl, 'http') && Storage::disk('public')->exists($this->currentImageUrl)) {
+                Storage::disk('public')->delete($this->currentImageUrl);
+            }
+
+            $imagePath = $this->image->store('gallery-images', 'public');
+        }
 
         $payload = [
             'title' => trim($this->title),
             'description' => $this->description !== null ? trim($this->description) : null,
-            'image_url' => trim($this->image_url),
+            'image_url' => $imagePath,
         ];
 
         $payload['description'] = $payload['description'] === '' ? null : $payload['description'];

@@ -19,9 +19,16 @@
         </div>
 
         <div>
-            <label class="mb-1 block text-sm font-medium text-gray-900" for="post-image">{{ __('Featured Image URL') }}</label>
-            <input id="post-image" type="text" wire:model="featured_image" placeholder="https://..." class="block w-full rounded-lg border-gray-300 bg-white text-sm shadow-sm focus:border-brand-green focus:ring-brand-green" />
+            <label class="mb-1 block text-sm font-medium text-gray-900" for="post-image">{{ __('Featured Image') }}</label>
+            <input id="post-image" type="file" wire:model="featured_image" accept="image/png, image/jpeg, image/jpg, image/webp" class="block w-full text-sm text-brand-dark file:mr-4 file:rounded-full file:border-0 file:bg-brand-green/10 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-brand-green hover:file:bg-brand-green/20 cursor-pointer" />
+            <p class="mt-1 text-xs text-brand-muted">Maks 5 MB.</p>
             @error('featured_image') <p class="mt-2 text-sm text-red-600">{{ $message }}</p> @enderror
+
+            @if ($featured_image)
+                <div class="mt-3 inline-flex max-w-full justify-center overflow-hidden rounded-xl border border-brand-green/10 bg-brand-light/60 p-3">
+                    <img src="{{ $featured_image->temporaryUrl() }}" alt="Preview" class="h-auto w-auto max-w-full" />
+                </div>
+            @endif
         </div>
 
         <div>

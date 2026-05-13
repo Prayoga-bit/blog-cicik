@@ -6,9 +6,12 @@ use App\Services\BlogAdminService;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class BlogCreateForm extends Component
 {
+    use WithFileUploads;
+
     public bool $isUserView = false;
 
     public string $title = '';
@@ -19,7 +22,7 @@ class BlogCreateForm extends Component
 
     public ?string $category = null;
 
-    public ?string $featured_image = null;
+    public $featured_image;
 
     public bool $is_featured = false;
 
@@ -39,21 +42,24 @@ class BlogCreateForm extends Component
             'slug' => ['required', 'string', 'max:255', Rule::unique('blogs', 'slug')],
             'content' => ['required', 'string'],
             'category' => ['nullable', 'string', 'max:255'],
-            'featured_image' => ['nullable', 'string', 'max:2048'],
+            'featured_image' => ['nullable', 'image', 'max:5120'],
             'is_featured' => ['boolean'],
         ]);
+
+        $imagePath = $this->featured_image
+            ? $this->featured_image->store('blog-images', 'public')
+            : null;
 
         $payload = [
             'title' => trim($this->title),
             'slug' => trim($this->slug),
             'content' => $this->content,
             'category' => $this->category !== null ? trim($this->category) : null,
-            'featured_image' => $this->featured_image !== null ? trim($this->featured_image) : null,
+            'featured_image' => $imagePath,
             'is_featured' => $this->is_featured,
         ];
 
         $payload['category'] = $payload['category'] === '' ? null : $payload['category'];
-        $payload['featured_image'] = $payload['featured_image'] === '' ? null : $payload['featured_image'];
 
         $blog = $blogAdminService->createPost($payload, (int) auth()->id());
 

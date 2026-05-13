@@ -53,7 +53,9 @@ class BlogEditor extends Component
                 'title' => $post->title,
                 'slug' => $post->slug,
                 'category' => $post->category,
-                'featured_image' => $post->featured_image,
+                'featured_image' => $post->featured_image
+                    ? (str_starts_with($post->featured_image, 'http') ? $post->featured_image : asset('storage/' . $post->featured_image))
+                    : null,
                 'is_featured' => (bool) $post->is_featured,
                 'author_name' => $post->author?->name ?? 'Editorial Team',
                 'excerpt' => Str::limit(strip_tags((string) $post->content), 140),

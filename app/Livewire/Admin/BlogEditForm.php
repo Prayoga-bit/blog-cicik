@@ -4,12 +4,16 @@ namespace App\Livewire\Admin;
 
 use App\Models\Blog;
 use App\Services\BlogAdminService;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class BlogEditForm extends Component
 {
+    use WithFileUploads;
+
     public Blog $blog;
 
     public bool $isUserView = false;
@@ -18,7 +22,8 @@ class BlogEditForm extends Component
     public string $slug = '';
     public string $content = '';
     public ?string $category = null;
-    public ?string $featured_image = null;
+    public $featuredImage;
+    public ?string $currentFeaturedImage = null;
     public bool $is_featured = false;
 
     public string $statusMessage = '';
@@ -31,7 +36,7 @@ class BlogEditForm extends Component
         $this->slug = (string) $blog->slug;
         $this->content = $blog->content?->toEditorHtml() ?? '';
         $this->category = $blog->category;
-        $this->featured_image = $blog->featured_image;
+        $this->currentFeaturedImage = $blog->featured_image;
         $this->is_featured = (bool) $blog->is_featured;
     }
 
@@ -46,21 +51,29 @@ class BlogEditForm extends Component
             'slug' => ['required', 'string', 'max:255', Rule::unique('blogs', 'slug')->ignore($this->blog->id)],
             'content' => ['required', 'string'],
             'category' => ['nullable', 'string', 'max:255'],
-            'featured_image' => ['nullable', 'string', 'max:2048'],
+            'featuredImage' => ['nullable', 'image', 'max:5120'],
             'is_featured' => ['boolean'],
         ]);
+
+        $imagePath = $this->currentFeaturedImage;
+        if ($this->featuredImage) {
+            if ($this->currentFeaturedImage && !str_starts_with($this->currentFeaturedImage, 'http') && Storage::disk('public')->exists($this->currentFeaturedImage)) {
+                Storage::disk('public')->delete($this->currentFeaturedImage);
+            }
+
+            $imagePath = $this->featuredImage->store('blog-images', 'public');
+        }
 
         $payload = [
             'title' => $this->title,
             'slug' => $this->slug,
             'content' => $this->content,
             'category' => $this->category !== null ? trim($this->category) : null,
-            'featured_image' => $this->featured_image !== null ? trim($this->featured_image) : null,
+            'featured_image' => $imagePath,
             'is_featured' => $this->is_featured,
         ];
 
         $payload['category'] = $payload['category'] === '' ? null : $payload['category'];
-        $payload['featured_image'] = $payload['featured_image'] === '' ? null : $payload['featured_image'];
 
         if ($this->isUserView) {
             $blogAdminService->updateUserPost($this->blog->id, (int) auth()->id(), $payload);

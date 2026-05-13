@@ -51,7 +51,9 @@ class GalleryEditor extends Component
                 'id' => $item->id,
                 'title' => $item->title,
                 'description' => $item->description,
-                'image_url' => $item->image_url,
+                'image_url' => $item->image_url
+                    ? (str_starts_with($item->image_url, 'http') ? $item->image_url : asset('storage/' . $item->image_url))
+                    : null,
                 'author_name' => $item->user?->name ?? 'Gallery Team',
                 'created_at' => optional($item->created_at)->format('M d, Y'),
                 'description_excerpt' => Str::limit(strip_tags((string) $item->description), 130),

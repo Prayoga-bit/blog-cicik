@@ -4,16 +4,19 @@ namespace App\Livewire\Admin;
 
 use App\Services\GalleryAdminService;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class GalleryCreateForm extends Component
 {
+    use WithFileUploads;
+
     public bool $isUserView = false;
 
     public string $title = '';
 
     public ?string $description = null;
 
-    public string $image_url = '';
+    public $image;
 
     public string $statusMessage = '';
 
@@ -27,13 +30,15 @@ class GalleryCreateForm extends Component
         $this->validate([
             'title' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string', 'max:65535'],
-            'image_url' => ['required', 'string', 'max:2048'],
+            'image' => ['required', 'image', 'max:5120'],
         ]);
+
+        $imagePath = $this->image->store('gallery-images', 'public');
 
         $payload = [
             'title' => trim($this->title),
             'description' => $this->description !== null ? trim($this->description) : null,
-            'image_url' => trim($this->image_url),
+            'image_url' => $imagePath,
         ];
 
         $payload['description'] = $payload['description'] === '' ? null : $payload['description'];

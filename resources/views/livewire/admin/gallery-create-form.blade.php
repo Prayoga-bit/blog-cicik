@@ -19,9 +19,16 @@
         </div>
 
         <div>
-            <label class="mb-1 block text-sm font-medium text-gray-900" for="gallery-image">{{ __('Image URL') }}</label>
-            <input id="gallery-image" type="text" wire:model="image_url" placeholder="https://..." class="block w-full rounded-lg border-gray-300 bg-white text-sm shadow-sm focus:border-brand-green focus:ring-brand-green" />
-            @error('image_url') <p class="mt-2 text-sm text-red-600">{{ $message }}</p> @enderror
+            <label class="mb-1 block text-sm font-medium text-gray-900" for="gallery-image">{{ __('Photo') }}</label>
+            <input id="gallery-image" type="file" wire:model="image" accept="image/png, image/jpeg, image/jpg, image/webp" class="block w-full text-sm text-brand-dark file:mr-4 file:rounded-full file:border-0 file:bg-brand-green/10 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-brand-green hover:file:bg-brand-green/20 cursor-pointer" />
+            <p class="mt-1 text-xs text-brand-muted">Maks 5 MB.</p>
+            @error('image') <p class="mt-2 text-sm text-red-600">{{ $message }}</p> @enderror
+
+            @if ($image)
+                <div class="mt-3 inline-flex max-w-full justify-center overflow-hidden rounded-xl border border-brand-green/10 bg-brand-light/60 p-3">
+                    <img src="{{ $image->temporaryUrl() }}" alt="Preview" class="h-auto w-auto max-w-full" />
+                </div>
+            @endif
         </div>
 
         <div class="flex items-center justify-between gap-4 pt-2">
