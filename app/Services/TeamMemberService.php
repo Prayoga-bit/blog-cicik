@@ -8,6 +8,19 @@ use Illuminate\Support\Collection;
 class TeamMemberService
 {
     /**
+     * Create a new team member.
+     */
+    public function createMember(array $payload): TeamMember
+    {
+        return TeamMember::query()->create([
+            'name' => $payload['name'] ?? '',
+            'position' => $payload['position'] ?? '',
+            'bio_description' => $payload['bio_description'] ?? '',
+            'photo_url' => $payload['photo_url'] ?? null,
+        ]);
+    }
+
+    /**
      * Retrieve all team members for the admin editor.
      */
     public function getEditableMembers(): Collection

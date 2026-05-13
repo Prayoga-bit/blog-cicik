@@ -13,6 +13,7 @@ class TeamMemberEditor extends Component
 
     public array $members = [];
 
+<<<<<<< HEAD
     // Form states
     public bool $isFormOpen = false;
     public bool $isEditing = false;
@@ -24,10 +25,20 @@ class TeamMemberEditor extends Component
     public string $bio_description = '';
     public $photo;
     public ?string $oldPhoto = null;
+=======
+    public array $newMember = [
+        'name' => '',
+        'position' => '',
+        'bio_description' => '',
+        'photo_url' => '',
+    ];
+
+    public ?int $savedMemberId = null;
+>>>>>>> a138344 (feat: adding the feature to add new member)
 
     public string $statusMessage = '';
 
-    public function mount(TeamMemberService $teamMemberService): void
+    private function loadMembers(TeamMemberService $teamMemberService): void
     {
         $this->loadMembers($teamMemberService);
     }
@@ -47,7 +58,49 @@ class TeamMemberEditor extends Component
             ->all();
     }
 
+<<<<<<< HEAD
     public function createNew(): void
+=======
+    public function mount(TeamMemberService $teamMemberService): void
+    {
+        $this->loadMembers($teamMemberService);
+    }
+
+    public function createMember(TeamMemberService $teamMemberService): void
+    {
+        $this->validate([
+            'newMember.name' => ['required', 'string', 'max:255'],
+            'newMember.position' => ['required', 'string', 'max:255'],
+            'newMember.bio_description' => ['required', 'string', 'max:65535'],
+            'newMember.photo_url' => ['nullable', 'string', 'max:2048'],
+        ]);
+
+        $payload = [
+            'name' => trim($this->newMember['name']),
+            'position' => trim($this->newMember['position']),
+            'bio_description' => trim($this->newMember['bio_description']),
+            'photo_url' => trim((string) ($this->newMember['photo_url'] ?? '')),
+        ];
+
+        $payload['photo_url'] = $payload['photo_url'] === '' ? null : $payload['photo_url'];
+
+        $teamMemberService->createMember($payload);
+
+        $this->reset('newMember');
+        $this->newMember = [
+            'name' => '',
+            'position' => '',
+            'bio_description' => '',
+            'photo_url' => '',
+        ];
+
+        $this->savedMemberId = null;
+        $this->loadMembers($teamMemberService);
+        $this->statusMessage = 'Team member baru berhasil ditambahkan.';
+    }
+
+    public function saveMember(int $memberId, TeamMemberService $teamMemberService): void
+>>>>>>> a138344 (feat: adding the feature to add new member)
     {
         $this->resetForm();
         $this->isEditing = false;

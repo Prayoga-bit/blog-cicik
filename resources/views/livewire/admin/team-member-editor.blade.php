@@ -9,6 +9,7 @@
         </div>
     @endif
 
+<<<<<<< HEAD
     @if (!$isFormOpen)
         <div class="flex items-center justify-between bg-white px-6 py-4 rounded-2xl shadow-sm border border-brand-green/10">
             <div>
@@ -20,6 +21,106 @@
                 Tambah Member Baru
             </button>
         </div>
+=======
+            <section class="overflow-hidden rounded-xl border border-brand-green/10 bg-white shadow-sm">
+                <div class="border-b border-gray-200 px-6 py-4">
+                    <h3 class="text-lg font-semibold text-gray-900">
+                        {{ __('Add New Team Member') }}
+                    </h3>
+                    <p class="text-sm text-gray-500">
+                        {{ __('Create a new profile and it will appear in the list below.') }}
+                    </p>
+                </div>
+
+                <form wire:submit.prevent="createMember" class="space-y-4 px-6 py-6">
+                    <div>
+                        <label class="mb-1 block text-sm font-medium text-gray-900" for="new-member-name">
+                            {{ __('Name') }}
+                        </label>
+                        <input
+                            id="new-member-name"
+                            type="text"
+                            wire:model="newMember.name"
+                            class="block w-full rounded-lg border-gray-300 bg-white text-sm shadow-sm focus:border-brand-green focus:ring-brand-green"
+                        />
+                        @error('newMember.name')
+                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label class="mb-1 block text-sm font-medium text-gray-900" for="new-member-position">
+                            {{ __('Position') }}
+                        </label>
+                        <input
+                            id="new-member-position"
+                            type="text"
+                            wire:model="newMember.position"
+                            class="block w-full rounded-lg border-gray-300 bg-white text-sm shadow-sm focus:border-brand-green focus:ring-brand-green"
+                        />
+                        @error('newMember.position')
+                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label class="mb-1 block text-sm font-medium text-gray-900" for="new-member-bio">
+                            {{ __('Bio Description') }}
+                        </label>
+                        <textarea
+                            id="new-member-bio"
+                            wire:model="newMember.bio_description"
+                            rows="4"
+                            class="block w-full rounded-lg border-gray-300 bg-white text-sm shadow-sm focus:border-brand-green focus:ring-brand-green"
+                        ></textarea>
+                        @error('newMember.bio_description')
+                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label class="mb-1 block text-sm font-medium text-gray-900" for="new-member-photo">
+                            {{ __('Photo URL') }}
+                        </label>
+                        <input
+                            id="new-member-photo"
+                            type="text"
+                            wire:model="newMember.photo_url"
+                            placeholder="https://..."
+                            class="block w-full rounded-lg border-gray-300 bg-white text-sm shadow-sm focus:border-brand-green focus:ring-brand-green"
+                        />
+                        @error('newMember.photo_url')
+                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="flex items-center justify-end gap-4 pt-2">
+                        <button
+                            type="submit"
+                            class="inline-flex items-center rounded-lg bg-brand-green px-4 py-2 text-sm font-semibold text-white transition hover:bg-brand-dark disabled:cursor-not-allowed disabled:opacity-75"
+                            wire:loading.attr="disabled"
+                            wire:target="createMember"
+                        >
+                            <span wire:loading.remove wire:target="createMember">{{ __('Add Member') }}</span>
+                            <span wire:loading wire:target="createMember">{{ __('Saving...') }}</span>
+                        </button>
+                    </div>
+                </form>
+            </section>
+
+            @forelse ($members as $index => $member)
+                <section class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm" wire:key="member-{{ $member['id'] }}">
+                    <div class="border-b border-gray-200 px-6 py-4">
+                        <div class="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-900">
+                                    {{ $member['name'] ?: 'Team Member' }}
+                                </h3>
+                                <p class="text-sm text-gray-500">
+                                    {{ __('Update profile details for this team member.') }}
+                                </p>
+                            </div>
+>>>>>>> a138344 (feat: adding the feature to add new member)
 
         <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             @forelse ($members as $member)
