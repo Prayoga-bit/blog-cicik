@@ -3,16 +3,17 @@
         <div class="rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-800">
             {{ $statusMessage }}
         </div>
-    @endif
-
-    <form wire:submit.prevent="save" class="space-y-4">
         <div>
+            <label class="mb-1 block text-sm font-medium text-gray-900" for="post-image">{{ __('Featured Image') }}</label>
+            <input id="post-image" type="file" wire:model="featuredImage" accept="image/png, image/jpeg, image/jpg, image/webp" class="block w-full cursor-pointer text-sm text-brand-dark file:mr-4 file:rounded-full file:border-0 file:bg-brand-green/10 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-brand-green hover:file:bg-brand-green/20" />
+            <p class="mt-1 text-xs text-brand-muted">Maks 5 MB.</p>
+            @error('featuredImage') <p class="mt-2 text-sm text-red-600">{{ $message }}</p> @enderror
             <label class="mb-1 block text-sm font-medium text-gray-900" for="post-title">{{ __('Title') }}</label>
-            <input id="post-title" type="text" wire:model="title" class="block w-full rounded-lg border-gray-300 bg-white text-sm shadow-sm focus:border-brand-green focus:ring-brand-green" />
+            @if ($featuredImage)
             @error('title') <p class="mt-2 text-sm text-red-600">{{ $message }}</p> @enderror
         </div>
 
-        <div>
+            @elseif ($currentFeaturedImage)
             <label class="mb-1 block text-sm font-medium text-gray-900" for="post-slug">{{ __('Slug') }}</label>
             <input id="post-slug" type="text" wire:model="slug" class="block w-full rounded-lg border-gray-300 bg-white text-sm shadow-sm focus:border-brand-green focus:ring-brand-green" />
             @error('slug') <p class="mt-2 text-sm text-red-600">{{ $message }}</p> @enderror

@@ -4,14 +4,18 @@ namespace App\Livewire\Admin;
 
 use App\Models\Blog;
 use App\Services\BlogAdminService;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Livewire\WithFileUploads;
 
 class BlogEditForm extends Component
 {
+    use WithFileUploads;
+
     use WithFileUploads;
 
     public Blog $blog;
@@ -22,6 +26,8 @@ class BlogEditForm extends Component
     public string $slug = '';
     public string $content = '';
     public ?string $category = null;
+    public $featuredImage;
+    public ?string $currentFeaturedImage = null;
     public $featuredImage;
     public ?string $currentFeaturedImage = null;
     public bool $is_featured = false;
@@ -36,6 +42,7 @@ class BlogEditForm extends Component
         $this->slug = (string) $blog->slug;
         $this->content = $blog->content?->toEditorHtml() ?? '';
         $this->category = $blog->category;
+        $this->currentFeaturedImage = $blog->featured_image;
         $this->currentFeaturedImage = $blog->featured_image;
         $this->is_featured = (bool) $blog->is_featured;
     }
@@ -52,12 +59,14 @@ class BlogEditForm extends Component
             'content' => ['required', 'string'],
             'category' => ['nullable', 'string', 'max:255'],
             'featuredImage' => ['nullable', 'image', 'max:5120'],
+            'featuredImage' => ['nullable', 'image', 'max:5120'],
             'is_featured' => ['boolean'],
         ]);
 
         $imagePath = $this->currentFeaturedImage;
+
         if ($this->featuredImage) {
-            if ($this->currentFeaturedImage && !str_starts_with($this->currentFeaturedImage, 'http') && Storage::disk('public')->exists($this->currentFeaturedImage)) {
+            if ($this->currentFeaturedImage && ! str_starts_with($this->currentFeaturedImage, 'http') && Storage::disk('public')->exists($this->currentFeaturedImage)) {
                 Storage::disk('public')->delete($this->currentFeaturedImage);
             }
 
@@ -70,13 +79,14 @@ class BlogEditForm extends Component
             'content' => $this->content,
             'category' => $this->category !== null ? trim($this->category) : null,
             'featured_image' => $imagePath,
+            'featured_image' => $imagePath,
             'is_featured' => $this->is_featured,
         ];
 
         $payload['category'] = $payload['category'] === '' ? null : $payload['category'];
 
         if ($this->isUserView) {
-            $blogAdminService->updateUserPost($this->blog->id, (int) auth()->id(), $payload);
+            $blogAdminService->updateUserPost($this->blog->id, (int) Auth::id(), $payload);
         } else {
             $blogAdminService->updatePost($this->blog->id, $payload);
         }

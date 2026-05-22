@@ -32,7 +32,7 @@
                     <article class="overflow-hidden rounded-2xl border border-brand-green/10 bg-white shadow-sm transition-shadow duration-200 hover:shadow-md" wire:key="blog-post-{{ $post['id'] }}">
                         <div class="relative h-44 w-full bg-slate-100">
                             @if ($post['featured_image'])
-                                <img src="{{ $post['featured_image'] }}" alt="{{ $post['title'] }}" loading="lazy" class="h-full w-full object-cover" />
+                                <img src="{{ str_starts_with($post['featured_image'], 'http') ? $post['featured_image'] : asset('storage/' . $post['featured_image']) }}" alt="{{ $post['title'] }}" loading="lazy" class="h-full w-full object-cover" />
                             @else
                                 <div class="flex h-full w-full items-center justify-center bg-gradient-to-br from-brand-light to-white text-sm text-brand-muted">
                                     No image

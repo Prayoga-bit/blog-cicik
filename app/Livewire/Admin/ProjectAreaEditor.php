@@ -3,11 +3,17 @@
 namespace App\Livewire\Admin;
 
 use App\Services\ProjectAreaService;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class ProjectAreaEditor extends Component
 {
+    use WithFileUploads;
+
     public array $areas = [];
+
+    public array $areaImages = [];
 
     public ?int $savedAreaId = null;
 
@@ -40,14 +46,24 @@ class ProjectAreaEditor extends Component
             "areas.{$areaIndex}.title" => ['required', 'string', 'max:255'],
             "areas.{$areaIndex}.description" => ['required', 'string', 'max:65535'],
             "areas.{$areaIndex}.icon_url" => ['nullable', 'string', 'max:255'],
-            "areas.{$areaIndex}.image_url" => ['nullable', 'string', 'max:2048'],
+            "areaImages.{$areaIndex}" => ['nullable', 'image', 'max:5120'],
         ]);
 
         $payload = $this->areas[$areaIndex];
         $payload['icon_url'] = trim((string) ($payload['icon_url'] ?? ''));
-        $payload['image_url'] = trim((string) ($payload['image_url'] ?? ''));
         $payload['icon_url'] = $payload['icon_url'] === '' ? null : $payload['icon_url'];
-        $payload['image_url'] = $payload['image_url'] === '' ? null : $payload['image_url'];
+
+        if (($this->areaImages[$areaIndex] ?? null) !== null) {
+            $currentImage = $payload['image_url'] ?? null;
+
+            if ($currentImage && ! str_starts_with($currentImage, 'http') && Storage::disk('public')->exists($currentImage)) {
+                Storage::disk('public')->delete($currentImage);
+            }
+
+            $payload['image_url'] = $this->areaImages[$areaIndex]->store('project-area-images', 'public');
+            $this->areas[$areaIndex]['image_url'] = $payload['image_url'];
+            $this->areaImages[$areaIndex] = null;
+        }
 
         $projectAreaService->updateArea($areaId, $payload);
 

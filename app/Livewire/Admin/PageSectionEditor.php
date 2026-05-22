@@ -3,15 +3,21 @@
 namespace App\Livewire\Admin;
 
 use App\Services\PageContentService;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class PageSectionEditor extends Component
 {
+    use WithFileUploads;
+
     public array $pageNames = [];
 
     public string $selectedPage = '';
 
     public array $sections = [];
+
+    public array $sectionImages = [];
 
     public ?string $savedPage = null;
 
@@ -50,17 +56,27 @@ class PageSectionEditor extends Component
         $this->validate([
             'sections' => ['required', 'array', 'min:1'],
             'sections.*.content' => ['nullable', 'string', 'max:65535'],
-            'sections.*.image_url' => ['nullable', 'string', 'max:2048'],
+            'sectionImages.*' => ['nullable', 'image', 'max:5120'],
         ]);
 
-        foreach ($this->sections as $section) {
-            $imageUrl = isset($section['image_url']) ? trim((string) $section['image_url']) : '';
+        foreach ($this->sections as $index => $section) {
+            $imageUrl = $section['image_url'] ?? null;
+
+            if (($this->sectionImages[$index] ?? null) !== null) {
+                if ($imageUrl && ! str_starts_with($imageUrl, 'http') && Storage::disk('public')->exists($imageUrl)) {
+                    Storage::disk('public')->delete($imageUrl);
+                }
+
+                $imageUrl = $this->sectionImages[$index]->store('page-section-images', 'public');
+                $this->sections[$index]['image_url'] = $imageUrl;
+                $this->sectionImages[$index] = null;
+            }
 
             $cms->updateSectionContentAndImage(
                 $this->selectedPage,
                 $section['section_key'],
                 $section['content'] ?? null,
-                $imageUrl === '' ? null : $imageUrl,
+                $imageUrl,
             );
         }
 
@@ -72,9 +88,12 @@ class PageSectionEditor extends Component
     {
         if ($this->selectedPage === '') {
             $this->sections = [];
+            $this->sectionImages = [];
 
             return;
         }
+
+        $this->sectionImages = [];
 
         $this->sections = $cms->getEditableSections()
             ->get($this->selectedPage, collect())

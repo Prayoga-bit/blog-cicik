@@ -75,18 +75,29 @@
 
                         <div>
                             <label class="mb-1 block text-sm font-semibold text-brand-dark" for="area-image-{{ $area['id'] }}">
-                                {{ __('Image URL') }}
+                                {{ __('Image') }}
                             </label>
                             <input
                                 id="area-image-{{ $area['id'] }}"
-                                type="text"
-                                wire:model="areas.{{ $index }}.image_url"
-                                placeholder="https://..."
-                                class="block w-full rounded-lg border-brand-green/20 bg-white text-sm shadow-sm focus:border-brand-green focus:ring-brand-green"
+                                type="file"
+                                wire:model="areaImages.{{ $index }}"
+                                accept="image/png, image/jpeg, image/jpg, image/webp"
+                                class="block w-full cursor-pointer rounded-lg border-brand-green/20 bg-white text-sm shadow-sm file:mr-4 file:rounded-full file:border-0 file:bg-brand-green/10 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-brand-green hover:file:bg-brand-green/20 focus:border-brand-green focus:ring-brand-green"
                             />
-                            @error('areas.' . $index . '.image_url')
+                            <p class="mt-1 text-xs text-brand-muted">Maks 5 MB.</p>
+                            @error('areaImages.' . $index)
                                 <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                             @enderror
+
+                            @if ($areaImages[$index] ?? null)
+                                <div class="mt-3 inline-flex max-w-full justify-center overflow-hidden rounded-xl border border-brand-green/10 bg-brand-light/60 p-3">
+                                    <img src="{{ $areaImages[$index]->temporaryUrl() }}" alt="Preview" class="h-auto w-auto max-w-full" />
+                                </div>
+                            @elseif ($area['image_url'])
+                                <div class="mt-3 inline-flex max-w-full justify-center overflow-hidden rounded-xl border border-brand-green/10 bg-brand-light/60 p-3">
+                                    <img src="{{ str_starts_with($area['image_url'], 'http') ? $area['image_url'] : asset('storage/' . $area['image_url']) }}" alt="Current image" class="h-auto w-auto max-w-full" />
+                                </div>
+                            @endif
                         </div>
 
                         <div class="flex items-center justify-between gap-4 pt-4">
