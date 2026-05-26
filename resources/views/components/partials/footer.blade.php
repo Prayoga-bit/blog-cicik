@@ -3,7 +3,7 @@
         
         <!-- Brand & Description -->
         <div class="flex flex-col gap-6 w-full md:w-1/4">
-            <h2 class="font-cursive text-brand-light text-4xl">Christine Team</h2>
+            <h2 class="font-cursive text-brand-light text-4xl">Christin Team</h2>
             <p class="text-brand-muted text-base leading-relaxed">
                 Your trusted partner in financial growth and asset management. We help you navigate the complexities of the market.
             </p>
@@ -64,7 +64,7 @@
 
     <!-- Bottom Bar -->
     <div class="max-w-7xl mx-auto border-t border-gray-800 mt-16 pt-6 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-brand-muted">
-        <p>&copy; {{ date('Y') }} Christine Team. All rights reserved.</p>
+        <p>&copy; {{ date('Y') }} Christin Team. All rights reserved.</p>
         <div class="flex items-center gap-6">
             <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
             <a href="#" class="hover:text-white transition-colors">Terms of Service</a>

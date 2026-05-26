@@ -40,8 +40,8 @@
                 </div>
                 <div>
                     <h4 class="text-base font-bold text-white leading-tight">{{ $sections->get('contact_email_title')?->content ?? 'Email' }}</h4>
-                    <p class="text-sm text-gray-200 mt-1">{{ $sections->get('contact_email_1')?->content ?? 'info@christineteam.com' }}</p>
-                    <p class="text-sm text-gray-200">{{ $sections->get('contact_email_2')?->content ?? 'support@christineteam.com' }}</p>
+                    <p class="text-sm text-gray-200 mt-1">{{ $sections->get('contact_email_1')?->content ?? 'info@christinteam.com' }}</p>
+                    <p class="text-sm text-gray-200">{{ $sections->get('contact_email_2')?->content ?? 'support@christinteam.com' }}</p>
                 </div>
             </div>
 

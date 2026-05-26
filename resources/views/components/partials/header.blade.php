@@ -3,7 +3,7 @@
         <div class="max-w-7xl mx-auto px-6 md:px-12 lg:px-24 py-4 flex items-center justify-between">
             <!-- Brand -->
             <a href="/" class="font-cursive text-brand-dark text-3xl md:text-4xl hover:opacity-80 transition-opacity">
-                Christine Team
+                Christin Team
             </a>
 
             <!-- Desktop Navigation Links -->

@@ -4,8 +4,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Christine Team - Expert financial advice, investment strategies, and corporate consulting.">
-    <title>{{ $title ?? 'Christine Team - Empowering Financial Future' }}</title>
+    <meta name="description" content="Christin Team - Expert financial advice, investment strategies, and corporate consulting.">
+    <title>{{ $title ?? 'Christin Team - Empowering Financial Future' }}</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
