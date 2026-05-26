@@ -1,3 +1,7 @@
+@push('styles')
+    <x-rich-text::styles theme="daisyui" data-turbo-track="reload" />
+@endpush
+
 <x-app-layout>
     <x-slot name="header">
         <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">

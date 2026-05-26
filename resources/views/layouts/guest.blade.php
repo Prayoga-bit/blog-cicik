@@ -20,7 +20,6 @@
 
         <!-- Livewire Styles -->
         @livewireStyles
-        <x-rich-text::styles theme="daisyui" data-turbo-track="reload" />
     </head>
     <body class="antialiased bg-brand-light text-brand-dark font-sans">
         {{ $slot }}
