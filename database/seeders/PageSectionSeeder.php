@@ -30,6 +30,12 @@ class PageSectionSeeder extends Seeder
                 'content'     => 'Explore More',
                 'image_url'   => null,
             ],
+            [
+                'page_name'   => 'home',
+                'section_key' => 'hero_background_image',
+                'content'     => 'Hero background image',
+                'image_url'   => 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1600&auto=format&fit=crop',
+            ],
 
             // ── Who We Are ───────────────────────────────────────────────────
             [

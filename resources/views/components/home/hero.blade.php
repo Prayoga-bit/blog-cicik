@@ -1,7 +1,25 @@
 {{-- Home Hero Section --}}
+@php
+    $heroBackground = $sections->get('hero_background_image');
+    $heroBackgroundSrc = $heroBackground?->image_url
+        ? (str_starts_with($heroBackground->image_url, 'http') ? $heroBackground->image_url : asset('storage/' . $heroBackground->image_url))
+        : null;
+@endphp
+
 <section class="relative w-full min-h-screen flex items-center justify-start bg-brand-dark pt-20 px-6 md:px-12 lg:px-24 overflow-hidden">
+    @if ($heroBackgroundSrc)
+        <img
+            alt="{{ $heroBackground?->content ?? 'Hero background' }}"
+            loading="lazy"
+            class="absolute inset-0 z-0 h-full w-full object-cover opacity-25"
+            src="{{ $heroBackgroundSrc }}"
+        />
+    @endif
+
+    <div class="absolute inset-0 z-0"></div>
+
     {{-- Abstract background graphics --}}
-    <div class="absolute inset-0 z-0 opacity-40">
+    <div class="absolute inset-0 z-0 opacity-5">
         <div class="absolute -top-24 -left-24 w-96 h-96 bg-brand-green blur-[120px] rounded-full"></div>
         <div class="absolute bottom-0 right-0 w-[500px] h-[500px] bg-brand-yellow/20 blur-[150px] rounded-full"></div>
     </div>

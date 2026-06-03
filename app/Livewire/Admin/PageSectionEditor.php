@@ -95,7 +95,7 @@ class PageSectionEditor extends Component
 
         $this->sectionImages = [];
 
-        $this->sections = $cms->getEditableSections()
+        $sections = $cms->getEditableSections()
             ->get($this->selectedPage, collect())
             ->values()
             ->map(function ($section): array {
@@ -106,6 +106,20 @@ class PageSectionEditor extends Component
                     'image_url' => $section->image_url,
                 ];
             })
+            ->all();
+
+        if ($this->selectedPage === 'home' && ! collect($sections)->contains('section_key', 'hero_background_image')) {
+            $sections[] = [
+                'id' => 'hero_background_image',
+                'section_key' => 'hero_background_image',
+                'content' => 'Hero background image',
+                'image_url' => null,
+            ];
+        }
+
+        $this->sections = collect($sections)
+            ->sortBy('section_key')
+            ->values()
             ->all();
     }
 
