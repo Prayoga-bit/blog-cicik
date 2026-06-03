@@ -8,12 +8,9 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Livewire\WithFileUploads;
 
 class BlogCreateForm extends Component
 {
-    use WithFileUploads;
-
     use WithFileUploads;
 
     public bool $isUserView = false;
@@ -57,7 +54,6 @@ class BlogCreateForm extends Component
             'slug' => trim($this->slug),
             'content' => $this->content,
             'category' => $this->category !== null ? trim($this->category) : null,
-            'featured_image' => $imagePath,
             'featured_image' => $imagePath,
             'is_featured' => $this->is_featured,
         ];

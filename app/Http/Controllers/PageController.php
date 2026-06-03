@@ -39,7 +39,7 @@ class PageController extends Controller
     public function about(): View
     {
         $sections = $this->cms->getSections('about');
-        $teamMembers = TeamMember::query()->latest()->take(4)->get();
+        $teamMembers = TeamMember::query()->latest()->get();
 
         return view('pages.about', compact('sections', 'teamMembers'));
     }
