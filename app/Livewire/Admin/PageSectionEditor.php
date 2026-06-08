@@ -25,7 +25,16 @@ class PageSectionEditor extends Component
 
     public function mount(PageContentService $cms): void
     {
-        $this->pageNames = $cms->getPageNames()->values()->all();
+        $order = ['home', 'about', 'gallery', 'blog', 'contact'];
+
+        $this->pageNames = $cms->getPageNames()
+            ->sortBy(function ($name) use ($order) {
+                $pos = array_search($name, $order);
+
+                return $pos !== false ? $pos : 999;
+            })
+            ->values()
+            ->all();
 
         if ($this->pageNames === []) {
             return;
@@ -37,7 +46,7 @@ class PageSectionEditor extends Component
 
     public function selectPage(string $pageName, PageContentService $cms): void
     {
-        if (! in_array($pageName, $this->pageNames, true)) {
+        if (!in_array($pageName, $this->pageNames, true)) {
             return;
         }
 
@@ -63,7 +72,7 @@ class PageSectionEditor extends Component
             $imageUrl = $section['image_url'] ?? null;
 
             if (($this->sectionImages[$index] ?? null) !== null) {
-                if ($imageUrl && ! str_starts_with($imageUrl, 'http') && Storage::disk('public')->exists($imageUrl)) {
+                if ($imageUrl && !str_starts_with($imageUrl, 'http') && Storage::disk('public')->exists($imageUrl)) {
                     Storage::disk('public')->delete($imageUrl);
                 }
 
@@ -108,7 +117,7 @@ class PageSectionEditor extends Component
             })
             ->all();
 
-        if ($this->selectedPage === 'home' && ! collect($sections)->contains('section_key', 'hero_background_image')) {
+        if ($this->selectedPage === 'home' && !collect($sections)->contains('section_key', 'hero_background_image')) {
             $sections[] = [
                 'id' => 'hero_background_image',
                 'section_key' => 'hero_background_image',
