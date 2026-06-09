@@ -64,7 +64,12 @@
                                 <div class="flex items-center gap-3">
                                     <a href="{{ $isUserView ? route('user.blog-editor.edit', $post['id']) : route('blog-editor.edit', $post['id']) }}" class="inline-flex items-center gap-2 text-sm font-semibold text-brand-green transition hover:text-brand-dark">
                                         Edit
-                                        <i class="fa-solid fa-arrow-right"></i>
+                                        <i class="fa-solid fa-pen"></i>
+                                    </a>
+
+                                    <a href="{{ $isUserView ? route('user.blog-editor.comments', $post['id']) : route('blog-editor.comments', $post['id']) }}" class="inline-flex items-center gap-2 text-sm font-semibold text-brand-green transition hover:text-brand-dark">
+                                        Komen
+                                        <i class="fa-regular fa-comments"></i>
                                     </a>
 
                                     <button

@@ -36,6 +36,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('blog-editor', [BlogController::class, 'index'])->name('blog-editor');
         Route::get('blog-editor/create', [BlogController::class, 'create'])->name('blog-editor.create');
         Route::get('blog-editor/{blog}/edit', [BlogController::class, 'edit'])->name('blog-editor.edit');
+        Route::get('blog-editor/{blog}/comments', [BlogController::class, 'comments'])->name('blog-editor.comments');
     });
     
     // User-specific routes (for regular users)
@@ -45,6 +46,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('user/blog', [BlogController::class, 'userIndex'])->name('user.blog-editor');
     Route::get('user/blog/create', [BlogController::class, 'userCreate'])->name('user.blog-editor.create');
     Route::get('user/blog/{blog}/edit', [BlogController::class, 'userEdit'])->name('user.blog-editor.edit');
+    Route::get('user/blog/{blog}/comments', [BlogController::class, 'userComments'])->name('user.blog-editor.comments');
 });
     
 

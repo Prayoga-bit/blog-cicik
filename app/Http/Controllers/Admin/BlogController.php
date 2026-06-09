@@ -51,4 +51,24 @@ class BlogController extends Controller
             'isUserView' => true,
         ]);
     }
+
+    public function comments(Blog $blog): View
+    {
+        return view('blog-comments', [
+            'blog' => $blog,
+            'isUserView' => false,
+        ]);
+    }
+
+    public function userComments(Blog $blog): View
+    {
+        if ($blog->author_id !== auth()->id()) {
+            abort(403, 'Unauthorized to view comments for this blog.');
+        }
+
+        return view('blog-comments', [
+            'blog' => $blog,
+            'isUserView' => true,
+        ]);
+    }
 }
