@@ -11,6 +11,7 @@ class Comment extends Model
         'blog_id',
         'user_id',
         'comment_text',
+        'parent_id',
     ];
 
     public function blog(): BelongsTo
@@ -21,5 +22,15 @@ class Comment extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function parent(): BelongsTo
+    {
+        return $this->belongsTo(Comment::class, 'parent_id');
+    }
+
+    public function replies()
+    {
+        return $this->hasMany(Comment::class, 'parent_id');
     }
 }

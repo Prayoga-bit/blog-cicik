@@ -15,10 +15,36 @@ class BlogCommentManager extends Component
     public bool $isUserView = false;
     public ?string $statusMessage = null;
 
+    public ?int $replyingTo = null;
+    public string $replyText = '';
+
     public function mount(Blog $blog, bool $isUserView = false)
     {
         $this->blog = $blog;
         $this->isUserView = $isUserView;
+    }
+
+    public function setReply(?int $commentId)
+    {
+        $this->replyingTo = $commentId;
+        $this->replyText = '';
+    }
+
+    public function submitReply($parentId)
+    {
+        $this->validate([
+            'replyText' => ['required', 'string', 'min:3', 'max:1000'],
+        ]);
+
+        Comment::create([
+            'blog_id' => $this->blog->id,
+            'user_id' => auth()->id(),
+            'comment_text' => trim($this->replyText),
+            'parent_id' => $parentId,
+        ]);
+
+        $this->setReply(null);
+        $this->statusMessage = "Reply posted successfully.";
     }
 
     public function deleteComment($commentId)
@@ -34,7 +60,8 @@ class BlogCommentManager extends Component
     public function render()
     {
         $comments = Comment::where('blog_id', $this->blog->id)
-            ->with('user')
+            ->whereNull('parent_id')
+            ->with(['user', 'replies.user'])
             ->latest()
             ->paginate(10);
 
